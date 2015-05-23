@@ -50,9 +50,9 @@ public class Visita implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "VALOR_VISITA", precision = 6, scale = 2)
     private BigDecimal valorVisita;
-    @OneToMany(mappedBy = "codVisita")
+    @OneToMany(mappedBy = "visita")
     private List<Consumo> consumoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codVisita")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "visita")
     private List<Factura> facturaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "visita")
     private List<ConsumoActividad> consumoActividadList;

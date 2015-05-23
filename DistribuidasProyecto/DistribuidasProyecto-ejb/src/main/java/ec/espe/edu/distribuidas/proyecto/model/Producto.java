@@ -49,7 +49,7 @@ public class Producto implements Serializable {
     @Size(max = 100)
     @Column(name = "DESC_PRODUCTO", length = 100)
     private String descProducto;
-    @OneToMany(mappedBy = "codProducto")
+    @OneToMany(mappedBy = "producto")
     private List<Consumo> consumoList;
 
     public Producto() {

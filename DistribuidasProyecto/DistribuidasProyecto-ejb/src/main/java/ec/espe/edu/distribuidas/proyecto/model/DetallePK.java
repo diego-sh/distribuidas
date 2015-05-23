@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.espe.edu.distribuidas.proyecto.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -18,44 +15,41 @@ import javax.validation.constraints.NotNull;
  */
 @Embeddable
 public class DetallePK implements Serializable {
-    @Basic(optional = false)
-    @NotNull
+
     @Column(name = "COD_DETALLE", nullable = false)
-    private long codDetalle;
-    @Basic(optional = false)
-    @NotNull
+    private long codigoDetalle;
     @Column(name = "COD_FACTURA", nullable = false)
-    private int codFactura;
+    private Integer codigoFactura;
 
     public DetallePK() {
     }
 
     public DetallePK(long codDetalle, int codFactura) {
-        this.codDetalle = codDetalle;
-        this.codFactura = codFactura;
+        this.codigoDetalle = codDetalle;
+        this.codigoFactura = codFactura;
     }
 
-    public long getCodDetalle() {
-        return codDetalle;
+    public long getCodigoDetalle() {
+        return codigoDetalle;
     }
 
-    public void setCodDetalle(long codDetalle) {
-        this.codDetalle = codDetalle;
+    public void setCodigoDetalle(long codigoDetalle) {
+        this.codigoDetalle = codigoDetalle;
     }
 
     public int getCodFactura() {
-        return codFactura;
+        return codigoFactura;
     }
 
     public void setCodFactura(int codFactura) {
-        this.codFactura = codFactura;
+        this.codigoFactura = codFactura;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) codDetalle;
-        hash += (int) codFactura;
+        hash += (int) codigoDetalle;
+        hash += (int) codigoFactura;
         return hash;
     }
 
@@ -66,10 +60,10 @@ public class DetallePK implements Serializable {
             return false;
         }
         DetallePK other = (DetallePK) object;
-        if (this.codDetalle != other.codDetalle) {
+        if (this.codigoDetalle != other.codigoDetalle) {
             return false;
         }
-        if (this.codFactura != other.codFactura) {
+        if (this.codigoFactura != other.codigoFactura) {
             return false;
         }
         return true;
@@ -77,7 +71,7 @@ public class DetallePK implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.espe.edu.distribuidas.proyecto.model.DetallePK[ codDetalle=" + codDetalle + ", codFactura=" + codFactura + " ]";
+        return "DetallePK{" + "codigoDetalle=" + codigoDetalle + ", codigoFactura=" + codigoFactura + '}';
     }
-    
+
 }

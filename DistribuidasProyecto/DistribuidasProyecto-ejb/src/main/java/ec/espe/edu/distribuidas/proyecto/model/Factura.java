@@ -3,27 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.espe.edu.distribuidas.proyecto.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -31,50 +23,43 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "factura")
-@NamedQueries({
-    @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f")})
+
 public class Factura implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "COD_FACTURA", nullable = false)
-    private Integer codFactura;
-    @Basic(optional = false)
-    @NotNull
+    private Integer codigo;
     @Column(name = "FECHA", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "TOTAL", precision = 10, scale = 2)
     private BigDecimal total;
-    @JoinColumn(name = "COD_VISITA", referencedColumnName = "COD_VISITA", nullable = false)
+    @Column(name = "CEDULA")
+    private String cedula;
+    @Column(name = "COD_VISITA")
+    private String codigoVisita;
+
+    @JoinColumn(name = "COD_VISITA", referencedColumnName = "COD_VISITA", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Visita codVisita;
-    @JoinColumn(name = "CEDULA", referencedColumnName = "CEDULA", nullable = false)
+    private Visita visita;
+    @JoinColumn(name = "CEDULA", referencedColumnName = "CEDULA", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Cliente cedula;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "factura")
-    private List<Detalle> detalleList;
+    private Cliente cliente;
 
     public Factura() {
     }
 
     public Factura(Integer codFactura) {
-        this.codFactura = codFactura;
+        this.codigo = codFactura;
     }
 
-    public Factura(Integer codFactura, Date fecha) {
-        this.codFactura = codFactura;
-        this.fecha = fecha;
+    public Integer getCodigo() {
+        return codigo;
     }
 
-    public Integer getCodFactura() {
-        return codFactura;
-    }
-
-    public void setCodFactura(Integer codFactura) {
-        this.codFactura = codFactura;
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
 
     public Date getFecha() {
@@ -93,34 +78,42 @@ public class Factura implements Serializable {
         this.total = total;
     }
 
-    public Visita getCodVisita() {
-        return codVisita;
+    public Visita getVisita() {
+        return visita;
     }
 
-    public void setCodVisita(Visita codVisita) {
-        this.codVisita = codVisita;
+    public void setVisita(Visita visita) {
+        this.visita = visita;
     }
 
-    public Cliente getCedula() {
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getCedula() {
         return cedula;
     }
 
-    public void setCedula(Cliente cedula) {
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 
-    public List<Detalle> getDetalleList() {
-        return detalleList;
+    public String getCodigoVisita() {
+        return codigoVisita;
     }
 
-    public void setDetalleList(List<Detalle> detalleList) {
-        this.detalleList = detalleList;
+    public void setCodigoVisita(String codigoVisita) {
+        this.codigoVisita = codigoVisita;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codFactura != null ? codFactura.hashCode() : 0);
+        hash += (codigo != null ? codigo.hashCode() : 0);
         return hash;
     }
 
@@ -131,7 +124,7 @@ public class Factura implements Serializable {
             return false;
         }
         Factura other = (Factura) object;
-        if ((this.codFactura == null && other.codFactura != null) || (this.codFactura != null && !this.codFactura.equals(other.codFactura))) {
+        if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
         return true;
@@ -139,7 +132,7 @@ public class Factura implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.espe.edu.distribuidas.proyecto.model.Factura[ codFactura=" + codFactura + " ]";
+        return "Factura{" + "codigo=" + codigo + ", fecha=" + fecha + ", total=" + total + ", cedula=" + cedula + ", codigoVisita=" + codigoVisita + '}';
     }
-    
+
 }

@@ -3,22 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.espe.edu.distribuidas.proyecto.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -26,51 +18,32 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "detalle")
-@NamedQueries({
-    @NamedQuery(name = "Detalle.findAll", query = "SELECT d FROM Detalle d")})
+
 public class Detalle implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected DetallePK detallePK;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
+    protected DetallePK pk;
     @Column(name = "PRECIO_UNITARIO", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioUnitario;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "PRECIO_TOTAL", nullable = false, precision = 10, scale = 2)
-    private BigDecimal precioTotal;
-    @Size(max = 200)
+    private BigDecimal total;
     @Column(name = "DESCRIPCION", length = 200)
     private String descripcion;
-    @JoinColumn(name = "COD_FACTURA", referencedColumnName = "COD_FACTURA", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Factura factura;
 
     public Detalle() {
     }
 
     public Detalle(DetallePK detallePK) {
-        this.detallePK = detallePK;
+        this.pk = detallePK;
     }
 
-    public Detalle(DetallePK detallePK, BigDecimal precioUnitario, BigDecimal precioTotal) {
-        this.detallePK = detallePK;
-        this.precioUnitario = precioUnitario;
-        this.precioTotal = precioTotal;
+    public DetallePK getPk() {
+        return pk;
     }
 
-    public Detalle(long codDetalle, int codFactura) {
-        this.detallePK = new DetallePK(codDetalle, codFactura);
-    }
-
-    public DetallePK getDetallePK() {
-        return detallePK;
-    }
-
-    public void setDetallePK(DetallePK detallePK) {
-        this.detallePK = detallePK;
+    public void setPk(DetallePK pk) {
+        this.pk = pk;
     }
 
     public BigDecimal getPrecioUnitario() {
@@ -81,12 +54,12 @@ public class Detalle implements Serializable {
         this.precioUnitario = precioUnitario;
     }
 
-    public BigDecimal getPrecioTotal() {
-        return precioTotal;
+    public BigDecimal getTotal() {
+        return total;
     }
 
-    public void setPrecioTotal(BigDecimal precioTotal) {
-        this.precioTotal = precioTotal;
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     public String getDescripcion() {
@@ -97,18 +70,10 @@ public class Detalle implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Factura getFactura() {
-        return factura;
-    }
-
-    public void setFactura(Factura factura) {
-        this.factura = factura;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (detallePK != null ? detallePK.hashCode() : 0);
+        hash += (pk != null ? pk.hashCode() : 0);
         return hash;
     }
 
@@ -119,7 +84,7 @@ public class Detalle implements Serializable {
             return false;
         }
         Detalle other = (Detalle) object;
-        if ((this.detallePK == null && other.detallePK != null) || (this.detallePK != null && !this.detallePK.equals(other.detallePK))) {
+        if ((this.pk == null && other.pk != null) || (this.pk != null && !this.pk.equals(other.pk))) {
             return false;
         }
         return true;
@@ -127,7 +92,7 @@ public class Detalle implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.espe.edu.distribuidas.proyecto.model.Detalle[ detallePK=" + detallePK + " ]";
+        return "Detalle{" + "pk=" + pk + ", precioUnitario=" + precioUnitario + ", total=" + total + ", descripcion=" + descripcion + '}';
     }
-    
+
 }

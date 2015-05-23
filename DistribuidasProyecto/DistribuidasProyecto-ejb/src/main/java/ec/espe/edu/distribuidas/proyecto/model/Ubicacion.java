@@ -43,7 +43,7 @@ public class Ubicacion implements Serializable {
     @Size(max = 100)
     @Column(name = "REFERENCIA", length = 100)
     private String referencia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codUbicacion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ubicacion")
     private List<Establecimiento> establecimientoList;
 
     public Ubicacion() {

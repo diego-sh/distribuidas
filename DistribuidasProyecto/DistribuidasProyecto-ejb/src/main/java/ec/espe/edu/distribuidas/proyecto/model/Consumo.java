@@ -3,21 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.espe.edu.distribuidas.proyecto.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -26,32 +20,32 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "consumo")
 public class Consumo implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    @Id   
+    @Id
     @Column(name = "COD_CONSUMO", nullable = false, length = 5)
-    private String codigo;    
+    private String codigo;
     @Column(name = "CANTIDAD_PRODUCTO", nullable = false)
-    private int cantidad;    
+    private Integer cantidad;
     @Column(name = "DETALLE", length = 100)
     private String detalle;
-    
-    @JoinColumn(name = "COD_VISITA", referencedColumnName = "COD_VISITA")
+    @Column(name = "COD_VISITA")
+    private String codigoVisita;
+    @Column(name = "COD_PRODUCTO")
+    private String codigoProducto;
+
+    @JoinColumn(name = "COD_VISITA", referencedColumnName = "COD_VISITA", insertable = false, updatable = false)
     @ManyToOne
-    private Visita codVisita;
-    @JoinColumn(name = "COD_PRODUCTO", referencedColumnName = "COD_PRODUCTO")
+    private Visita visita;
+    @JoinColumn(name = "COD_PRODUCTO", referencedColumnName = "COD_PRODUCTO", insertable = false, updatable = false)
     @ManyToOne
-    private Producto codProducto;
+    private Producto producto;
 
     public Consumo() {
     }
 
     public Consumo(String codConsumo) {
         this.codigo = codConsumo;
-    }
-
-    public Consumo(String codConsumo, int cantidadProducto) {
-        this.codigo = codConsumo;
-        this.cantidad = cantidadProducto;
     }
 
     public String getCodigo() {
@@ -62,11 +56,11 @@ public class Consumo implements Serializable {
         this.codigo = codigo;
     }
 
-    public int getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -78,20 +72,36 @@ public class Consumo implements Serializable {
         this.detalle = detalle;
     }
 
-    public Visita getCodVisita() {
-        return codVisita;
+    public Visita getVisita() {
+        return visita;
     }
 
-    public void setCodVisita(Visita codVisita) {
-        this.codVisita = codVisita;
+    public void setVisita(Visita visita) {
+        this.visita = visita;
     }
 
-    public Producto getCodProducto() {
-        return codProducto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setCodProducto(Producto codProducto) {
-        this.codProducto = codProducto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public String getCodigoVisita() {
+        return codigoVisita;
+    }
+
+    public void setCodigoVisita(String codigoVisita) {
+        this.codigoVisita = codigoVisita;
+    }
+
+    public String getCodigoProducto() {
+        return codigoProducto;
+    }
+
+    public void setCodigoProducto(String codigoProducto) {
+        this.codigoProducto = codigoProducto;
     }
 
     @Override
@@ -116,7 +126,7 @@ public class Consumo implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.espe.edu.distribuidas.proyecto.model.Consumo[ codConsumo=" + codigo + " ]";
+        return "Consumo{" + "codigo=" + codigo + ", cantidad=" + cantidad + ", detalle=" + detalle + ", codigoVisita=" + codigoVisita + ", codigoProducto=" + codigoProducto + '}';
     }
-    
+
 }
