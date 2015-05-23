@@ -3,21 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.espe.edu.distribuidas.proyecto.model;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -25,78 +17,53 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "usuario")
-@NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
+
 public class Usuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 4)
     @Column(name = "COD_USUARIO", nullable = false, length = 4)
-    private String codUsuario;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 70)
+    private String codigo;
     @Column(name = "NOMBRE_USUARIO", nullable = false, length = 70)
-    private String nombreUsuario;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 8)
+    private String nombre;
     @Column(name = "CLAVE_USUARIO", nullable = false, length = 8)
-    private String claveUsuario;
-    @OneToMany(mappedBy = "codUsuario")
-    private List<Visita> visitaList;
+    private String clave;
 
     public Usuario() {
     }
 
     public Usuario(String codUsuario) {
-        this.codUsuario = codUsuario;
+        this.codigo = codUsuario;
     }
 
-    public Usuario(String codUsuario, String nombreUsuario, String claveUsuario) {
-        this.codUsuario = codUsuario;
-        this.nombreUsuario = nombreUsuario;
-        this.claveUsuario = claveUsuario;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public String getCodUsuario() {
-        return codUsuario;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public void setCodUsuario(String codUsuario) {
-        this.codUsuario = codUsuario;
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public String getClave() {
+        return clave;
     }
 
-    public String getClaveUsuario() {
-        return claveUsuario;
-    }
-
-    public void setClaveUsuario(String claveUsuario) {
-        this.claveUsuario = claveUsuario;
-    }
-
-    public List<Visita> getVisitaList() {
-        return visitaList;
-    }
-
-    public void setVisitaList(List<Visita> visitaList) {
-        this.visitaList = visitaList;
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codUsuario != null ? codUsuario.hashCode() : 0);
+        hash += (codigo != null ? codigo.hashCode() : 0);
         return hash;
     }
 
@@ -107,7 +74,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.codUsuario == null && other.codUsuario != null) || (this.codUsuario != null && !this.codUsuario.equals(other.codUsuario))) {
+        if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
         return true;
@@ -115,7 +82,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.espe.edu.distribuidas.proyecto.model.Usuario[ codUsuario=" + codUsuario + " ]";
+        return "Usuario{" + "codigo=" + codigo + ", nombre=" + nombre + ", clave=" + clave + '}';
     }
-    
+
 }

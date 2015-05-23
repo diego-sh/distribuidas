@@ -3,22 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.espe.edu.distribuidas.proyecto.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -26,59 +18,41 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "producto")
-@NamedQueries({
-    @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p")})
+
 public class Producto implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 6)
     @Column(name = "COD_PRODUCTO", nullable = false, length = 6)
-    private String codProducto;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 60)
+    private String codigo;
     @Column(name = "NOMBRE_PRODUCTO", nullable = false, length = 60)
-    private String nombreProducto;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
+    private String nombre;
     @Column(name = "PRECIO", nullable = false, precision = 6, scale = 2)
     private BigDecimal precio;
-    @Size(max = 100)
     @Column(name = "DESC_PRODUCTO", length = 100)
-    private String descProducto;
-    @OneToMany(mappedBy = "producto")
-    private List<Consumo> consumoList;
+    private String descripcion;
 
     public Producto() {
     }
 
     public Producto(String codProducto) {
-        this.codProducto = codProducto;
+        this.codigo = codProducto;
     }
 
-    public Producto(String codProducto, String nombreProducto, BigDecimal precio) {
-        this.codProducto = codProducto;
-        this.nombreProducto = nombreProducto;
-        this.precio = precio;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public String getCodProducto() {
-        return codProducto;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public void setCodProducto(String codProducto) {
-        this.codProducto = codProducto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getNombreProducto() {
-        return nombreProducto;
-    }
-
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public BigDecimal getPrecio() {
@@ -89,26 +63,18 @@ public class Producto implements Serializable {
         this.precio = precio;
     }
 
-    public String getDescProducto() {
-        return descProducto;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescProducto(String descProducto) {
-        this.descProducto = descProducto;
-    }
-
-    public List<Consumo> getConsumoList() {
-        return consumoList;
-    }
-
-    public void setConsumoList(List<Consumo> consumoList) {
-        this.consumoList = consumoList;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codProducto != null ? codProducto.hashCode() : 0);
+        hash += (codigo != null ? codigo.hashCode() : 0);
         return hash;
     }
 
@@ -119,7 +85,7 @@ public class Producto implements Serializable {
             return false;
         }
         Producto other = (Producto) object;
-        if ((this.codProducto == null && other.codProducto != null) || (this.codProducto != null && !this.codProducto.equals(other.codProducto))) {
+        if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
         return true;
@@ -127,7 +93,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.espe.edu.distribuidas.proyecto.model.Producto[ codProducto=" + codProducto + " ]";
+        return "Producto{" + "codigo=" + codigo + ", nombre=" + nombre + ", precio=" + precio + ", descripcion=" + descripcion + '}';
     }
-    
+
 }

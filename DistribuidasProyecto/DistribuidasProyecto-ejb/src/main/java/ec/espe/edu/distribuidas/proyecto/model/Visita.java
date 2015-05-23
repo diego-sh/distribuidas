@@ -3,28 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.espe.edu.distribuidas.proyecto.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -32,139 +23,139 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "visita")
-@NamedQueries({
-    @NamedQuery(name = "Visita.findAll", query = "SELECT v FROM Visita v")})
+
 public class Visita implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 8)
     @Column(name = "COD_VISITA", nullable = false, length = 8)
-    private String codVisita;
-    @Basic(optional = false)
-    @NotNull
+    private String codigo;
     @Column(name = "FECHA_VISITA", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaVisita;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    private Date fecha;
     @Column(name = "VALOR_VISITA", precision = 6, scale = 2)
-    private BigDecimal valorVisita;
-    @OneToMany(mappedBy = "visita")
-    private List<Consumo> consumoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "visita")
-    private List<Factura> facturaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "visita")
-    private List<ConsumoActividad> consumoActividadList;
+    private BigDecimal valor;
+    @Column(name = "CEDULA")
+    private String cedula;
+    @Column(name = "COD_TRANSPORTE")
+    private String codigoTransporte;
+    @Column(name = "COD_USUARIO")
+    private String codigoUsuario;
+    @Column(name = "COD_ESTABLECIMIENTO")
+    private String codidoEstablecimiento;
+
     @JoinColumn(name = "CEDULA", referencedColumnName = "CEDULA", nullable = false)
-    @ManyToOne(optional = false)
-    private Cliente cedula;
+    @ManyToOne
+    private Cliente cliente;
     @JoinColumn(name = "COD_TRANSPORTE", referencedColumnName = "COD_TRANSPORTE")
     @ManyToOne
-    private Transporte codTransporte;
+    private Transporte transporte;
     @JoinColumn(name = "COD_USUARIO", referencedColumnName = "COD_USUARIO")
     @ManyToOne
-    private Usuario codUsuario;
+    private Usuario usuario;
     @JoinColumn(name = "COD_ESTABLECIMIENTO", referencedColumnName = "COD_ESTABLECIMIENTO", nullable = false)
-    @ManyToOne(optional = false)
-    private Establecimiento codEstablecimiento;
+    @ManyToOne
+    private Establecimiento establecimiento;
 
     public Visita() {
     }
 
     public Visita(String codVisita) {
-        this.codVisita = codVisita;
+        this.codigo = codVisita;
     }
 
-    public Visita(String codVisita, Date fechaVisita) {
-        this.codVisita = codVisita;
-        this.fechaVisita = fechaVisita;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public String getCodVisita() {
-        return codVisita;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public void setCodVisita(String codVisita) {
-        this.codVisita = codVisita;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public Date getFechaVisita() {
-        return fechaVisita;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public void setFechaVisita(Date fechaVisita) {
-        this.fechaVisita = fechaVisita;
+    public BigDecimal getValor() {
+        return valor;
     }
 
-    public BigDecimal getValorVisita() {
-        return valorVisita;
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
 
-    public void setValorVisita(BigDecimal valorVisita) {
-        this.valorVisita = valorVisita;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public List<Consumo> getConsumoList() {
-        return consumoList;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public void setConsumoList(List<Consumo> consumoList) {
-        this.consumoList = consumoList;
+    public Transporte getTransporte() {
+        return transporte;
     }
 
-    public List<Factura> getFacturaList() {
-        return facturaList;
+    public void setTransporte(Transporte transporte) {
+        this.transporte = transporte;
     }
 
-    public void setFacturaList(List<Factura> facturaList) {
-        this.facturaList = facturaList;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public List<ConsumoActividad> getConsumoActividadList() {
-        return consumoActividadList;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public void setConsumoActividadList(List<ConsumoActividad> consumoActividadList) {
-        this.consumoActividadList = consumoActividadList;
+    public Establecimiento getEstablecimiento() {
+        return establecimiento;
     }
 
-    public Cliente getCedula() {
+    public void setEstablecimiento(Establecimiento establecimiento) {
+        this.establecimiento = establecimiento;
+    }
+
+    public String getCedula() {
         return cedula;
     }
 
-    public void setCedula(Cliente cedula) {
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 
-    public Transporte getCodTransporte() {
-        return codTransporte;
+    public String getCodigoTransporte() {
+        return codigoTransporte;
     }
 
-    public void setCodTransporte(Transporte codTransporte) {
-        this.codTransporte = codTransporte;
+    public void setCodigoTransporte(String codigoTransporte) {
+        this.codigoTransporte = codigoTransporte;
     }
 
-    public Usuario getCodUsuario() {
-        return codUsuario;
+    public String getCodigoUsuario() {
+        return codigoUsuario;
     }
 
-    public void setCodUsuario(Usuario codUsuario) {
-        this.codUsuario = codUsuario;
+    public void setCodigoUsuario(String codigoUsuario) {
+        this.codigoUsuario = codigoUsuario;
     }
 
-    public Establecimiento getCodEstablecimiento() {
-        return codEstablecimiento;
+    public String getCodidoEstablecimiento() {
+        return codidoEstablecimiento;
     }
 
-    public void setCodEstablecimiento(Establecimiento codEstablecimiento) {
-        this.codEstablecimiento = codEstablecimiento;
+    public void setCodidoEstablecimiento(String codidoEstablecimiento) {
+        this.codidoEstablecimiento = codidoEstablecimiento;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codVisita != null ? codVisita.hashCode() : 0);
+        hash += (codigo != null ? codigo.hashCode() : 0);
         return hash;
     }
 
@@ -175,7 +166,7 @@ public class Visita implements Serializable {
             return false;
         }
         Visita other = (Visita) object;
-        if ((this.codVisita == null && other.codVisita != null) || (this.codVisita != null && !this.codVisita.equals(other.codVisita))) {
+        if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
         return true;
@@ -183,7 +174,7 @@ public class Visita implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.espe.edu.distribuidas.proyecto.model.Visita[ codVisita=" + codVisita + " ]";
+        return "Visita{" + "codigo=" + codigo + ", fecha=" + fecha + ", valor=" + valor + ", cedula=" + cedula + ", codigoTransporte=" + codigoTransporte + ", codigoUsuario=" + codigoUsuario + ", codidoEstablecimiento=" + codidoEstablecimiento + '}';
     }
-    
+
 }

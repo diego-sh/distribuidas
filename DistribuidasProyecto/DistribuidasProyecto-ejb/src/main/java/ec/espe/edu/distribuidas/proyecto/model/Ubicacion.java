@@ -3,22 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.espe.edu.distribuidas.proyecto.model;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -26,44 +17,31 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "ubicacion")
-@NamedQueries({
-    @NamedQuery(name = "Ubicacion.findAll", query = "SELECT u FROM Ubicacion u")})
+
 public class Ubicacion implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 6)
     @Column(name = "COD_UBICACION", nullable = false, length = 6)
-    private String codUbicacion;
-    @Basic(optional = false)
-    @NotNull
+    private String codigo;
     @Column(name = "NUMERO_BLOQUE", nullable = false)
     private int numeroBloque;
-    @Size(max = 100)
     @Column(name = "REFERENCIA", length = 100)
     private String referencia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ubicacion")
-    private List<Establecimiento> establecimientoList;
 
     public Ubicacion() {
     }
 
     public Ubicacion(String codUbicacion) {
-        this.codUbicacion = codUbicacion;
+        this.codigo = codUbicacion;
     }
 
-    public Ubicacion(String codUbicacion, int numeroBloque) {
-        this.codUbicacion = codUbicacion;
-        this.numeroBloque = numeroBloque;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public String getCodUbicacion() {
-        return codUbicacion;
-    }
-
-    public void setCodUbicacion(String codUbicacion) {
-        this.codUbicacion = codUbicacion;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public int getNumeroBloque() {
@@ -82,18 +60,10 @@ public class Ubicacion implements Serializable {
         this.referencia = referencia;
     }
 
-    public List<Establecimiento> getEstablecimientoList() {
-        return establecimientoList;
-    }
-
-    public void setEstablecimientoList(List<Establecimiento> establecimientoList) {
-        this.establecimientoList = establecimientoList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codUbicacion != null ? codUbicacion.hashCode() : 0);
+        hash += (codigo != null ? codigo.hashCode() : 0);
         return hash;
     }
 
@@ -104,7 +74,7 @@ public class Ubicacion implements Serializable {
             return false;
         }
         Ubicacion other = (Ubicacion) object;
-        if ((this.codUbicacion == null && other.codUbicacion != null) || (this.codUbicacion != null && !this.codUbicacion.equals(other.codUbicacion))) {
+        if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
         return true;
@@ -112,7 +82,7 @@ public class Ubicacion implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.espe.edu.distribuidas.proyecto.model.Ubicacion[ codUbicacion=" + codUbicacion + " ]";
+        return "Ubicacion{" + "codigo=" + codigo + ", numeroBloque=" + numeroBloque + ", referencia=" + referencia + '}';
     }
-    
+
 }
