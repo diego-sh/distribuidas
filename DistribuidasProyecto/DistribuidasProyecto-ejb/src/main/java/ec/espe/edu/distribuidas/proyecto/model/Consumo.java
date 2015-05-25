@@ -8,6 +8,8 @@ package ec.espe.edu.distribuidas.proyecto.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,8 +25,9 @@ public class Consumo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "COD_CONSUMO", nullable = false, length = 5)
-    private String codigo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "COD_CONSUMO", nullable = false)
+    private Integer codigo;
     @Column(name = "CANTIDAD_PRODUCTO", nullable = false)
     private Integer cantidad;
     @Column(name = "DETALLE", length = 100)
@@ -44,15 +47,15 @@ public class Consumo implements Serializable {
     public Consumo() {
     }
 
-    public Consumo(String codConsumo) {
+    public Consumo(Integer codConsumo) {
         this.codigo = codConsumo;
     }
 
-    public String getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 

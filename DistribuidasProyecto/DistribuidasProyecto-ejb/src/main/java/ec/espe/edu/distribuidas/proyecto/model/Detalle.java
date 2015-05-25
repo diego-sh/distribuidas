@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 /**
@@ -23,6 +25,7 @@ public class Detalle implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected DetallePK pk;
     @Column(name = "PRECIO_UNITARIO", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioUnitario;
@@ -30,6 +33,8 @@ public class Detalle implements Serializable {
     private BigDecimal total;
     @Column(name = "DESCRIPCION", length = 200)
     private String descripcion;
+    @Column(name = "CANTIDAD")
+    private Integer cantidad;
 
     public Detalle() {
     }
@@ -70,6 +75,15 @@ public class Detalle implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -92,7 +106,7 @@ public class Detalle implements Serializable {
 
     @Override
     public String toString() {
-        return "Detalle{" + "pk=" + pk + ", precioUnitario=" + precioUnitario + ", total=" + total + ", descripcion=" + descripcion + '}';
-    }
+        return "Detalle{" + "pk=" + pk + '}';
+    }    
 
 }

@@ -35,6 +35,8 @@ public class Visita implements Serializable {
     private Date fecha;
     @Column(name = "VALOR_VISITA", precision = 6, scale = 2)
     private BigDecimal valor;
+    @Column(name = "ESTADO_FACTURA")
+    private boolean estadoFactura;
     @Column(name = "CEDULA")
     private String cedula;
     @Column(name = "COD_TRANSPORTE")
@@ -86,6 +88,14 @@ public class Visita implements Serializable {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public boolean isEstadoFactura() {
+        return estadoFactura;
+    }
+
+    public void setEstadoFactura(boolean estadoFactura) {
+        this.estadoFactura = estadoFactura;
     }
 
     public Cliente getCliente() {
@@ -174,7 +184,7 @@ public class Visita implements Serializable {
 
     @Override
     public String toString() {
-        return "Visita{" + "codigo=" + codigo + ", fecha=" + fecha + ", valor=" + valor + ", cedula=" + cedula + ", codigoTransporte=" + codigoTransporte + ", codigoUsuario=" + codigoUsuario + ", codidoEstablecimiento=" + codidoEstablecimiento + '}';
+        return "Visita{" + "codigo=" + codigo + ", fecha=" + fecha + ", valor=" + valor + ", estadoFactura=" + estadoFactura + ", cedula=" + cedula + ", codigoTransporte=" + codigoTransporte + ", codigoUsuario=" + codigoUsuario + ", codidoEstablecimiento=" + codidoEstablecimiento + '}';
     }
 
 }

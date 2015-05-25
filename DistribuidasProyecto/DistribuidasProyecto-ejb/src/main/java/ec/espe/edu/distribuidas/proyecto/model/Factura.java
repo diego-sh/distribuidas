@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,6 +30,7 @@ public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "COD_FACTURA", nullable = false)
     private Integer codigo;
     @Column(name = "FECHA", nullable = false)
@@ -36,13 +39,8 @@ public class Factura implements Serializable {
     @Column(name = "TOTAL", precision = 10, scale = 2)
     private BigDecimal total;
     @Column(name = "CEDULA")
-    private String cedula;
-    @Column(name = "COD_VISITA")
-    private String codigoVisita;
-
-    @JoinColumn(name = "COD_VISITA", referencedColumnName = "COD_VISITA", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Visita visita;
+    private String cedula;    
+    
     @JoinColumn(name = "CEDULA", referencedColumnName = "CEDULA", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Cliente cliente;
@@ -76,15 +74,7 @@ public class Factura implements Serializable {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
-    }
-
-    public Visita getVisita() {
-        return visita;
-    }
-
-    public void setVisita(Visita visita) {
-        this.visita = visita;
-    }
+    }    
 
     public Cliente getCliente() {
         return cliente;
@@ -100,15 +90,7 @@ public class Factura implements Serializable {
 
     public void setCedula(String cedula) {
         this.cedula = cedula;
-    }
-
-    public String getCodigoVisita() {
-        return codigoVisita;
-    }
-
-    public void setCodigoVisita(String codigoVisita) {
-        this.codigoVisita = codigoVisita;
-    }
+    }    
 
     @Override
     public int hashCode() {
@@ -132,7 +114,9 @@ public class Factura implements Serializable {
 
     @Override
     public String toString() {
-        return "Factura{" + "codigo=" + codigo + ", fecha=" + fecha + ", total=" + total + ", cedula=" + cedula + ", codigoVisita=" + codigoVisita + '}';
+        return "Factura{" + "codigo=" + codigo + ", fecha=" + fecha + ", total=" + total + ", cedula=" + cedula + '}';
     }
+
+   
 
 }
