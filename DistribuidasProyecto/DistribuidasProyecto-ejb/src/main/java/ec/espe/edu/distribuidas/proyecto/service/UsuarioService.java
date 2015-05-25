@@ -14,7 +14,7 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author hendrix
+ * @author Daniel
  */
 @LocalBean
 @Stateless
