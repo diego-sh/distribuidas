@@ -24,7 +24,7 @@ public class Establecimiento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "COD_ESTABLECIMIENTO", nullable = false, length = 10)
+    @Column(name = "COD_ESTABLECIMIENTO", nullable = false, length = 4)
     private String codigo;
     @Column(name = "NOMBRE_ESTABLECIMIENTO", nullable = false, length = 50)
     private String nombre;

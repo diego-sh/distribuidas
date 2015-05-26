@@ -22,7 +22,7 @@ public class Ubicacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "COD_UBICACION", nullable = false, length = 6)
+    @Column(name = "COD_UBICACION", nullable = false, length = 4)
     private String codigo;
     @Column(name = "NUMERO_BLOQUE", nullable = false)
     private int numeroBloque;
