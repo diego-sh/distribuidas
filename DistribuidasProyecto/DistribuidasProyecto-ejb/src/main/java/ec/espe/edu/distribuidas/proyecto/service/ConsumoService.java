@@ -8,11 +8,14 @@ package ec.espe.edu.distribuidas.proyecto.service;
 import ec.espe.edu.distribuidas.proyecto.dao.ActividadDAO;
 import ec.espe.edu.distribuidas.proyecto.dao.ConsumoActividadDAO;
 import ec.espe.edu.distribuidas.proyecto.dao.ConsumoDAO;
+import ec.espe.edu.distribuidas.proyecto.dao.EstablecimientoDAO;
+import ec.espe.edu.distribuidas.proyecto.dao.UbicacionDAO;
 import ec.espe.edu.distribuidas.proyecto.dao.VisitaDAO;
 import ec.espe.edu.distribuidas.proyecto.model.Actividad;
 import ec.espe.edu.distribuidas.proyecto.model.Consumo;
 import ec.espe.edu.distribuidas.proyecto.model.ConsumoActividad;
 import ec.espe.edu.distribuidas.proyecto.model.Establecimiento;
+import ec.espe.edu.distribuidas.proyecto.model.Ubicacion;
 import ec.espe.edu.distribuidas.proyecto.model.Visita;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -37,22 +40,10 @@ public class ConsumoService {
     private VisitaDAO visitaDAO;
     @EJB
     private ActividadDAO actividadDAO;
-
-    public void crearVisita() {
-        Establecimiento establecimientTMP = new Establecimiento();
-        Visita visitaTMP = new Visita();        
-        String codigoTransporte = null, cedula = null;
-        String codigoUsuario = null;
-        Date fechaVisita = new Date();
-        visitaTMP.setCodidoEstablecimiento(establecimientTMP.getCodigo());
-        visitaTMP.setCedula(cedula);
-        visitaTMP.setCodigoTransporte(codigoTransporte);
-        visitaTMP.setCodigoUsuario(codigoUsuario);
-        visitaTMP.setFecha(fechaVisita);
-        visitaTMP.setValor(BigDecimal.ZERO);
-        visitaTMP.setEstadoFactura(false);
-        this.visitaDAO.insert(visitaTMP);
-    }
+    @EJB
+    private EstablecimientoDAO establecimientoDAO;
+    @EJB
+    private UbicacionDAO ubicacionDAO;
 
     public void crearConsumo(Consumo consumo) {
         this.consumoDAO.insert(consumo);
@@ -84,6 +75,31 @@ public class ConsumoService {
 
     public Actividad obtenerActividadPorCodigo(String codigo) {
         return this.actividadDAO.findById(codigo, false);
+    }
+
+    public void crearVisita(Visita visita) {
+        Date fechaVisita = new Date();
+        visita.setCodidoEstablecimiento(visita.getCodidoEstablecimiento());
+        visita.setCedula(visita.getCedula());
+        visita.setCodigoTransporte(visita.getCodigoTransporte());
+        visita.setCodigoUsuario(visita.getCodigoUsuario());
+        visita.setFecha(fechaVisita);
+        visita.setValor(valorVisita(visita.getCodidoEstablecimiento()));
+        visita.setEstadoFactura(false);
+        this.visitaDAO.insert(visita);
+    }
+
+    public BigDecimal valorVisita(String codigoStablecimiento) {
+        BigDecimal valor = new BigDecimal("0.00");
+        Establecimiento establecimientoTMP = new Establecimiento();
+        establecimientoTMP = this.establecimientoDAO.findById(codigoStablecimiento, true);
+        Ubicacion ubicacionTMP = new Ubicacion();
+        ubicacionTMP = this.ubicacionDAO.findById(establecimientoTMP.getCodigo(), true);
+        if (ubicacionTMP.getNumeroBloque() > 5) {
+            return valor.add(new BigDecimal(20));
+        } else {
+            return valor.add(new BigDecimal(30));
+        }
     }
 
 }
