@@ -6,10 +6,12 @@
 package ec.espe.edu.distribuidas.proyecto.service;
 
 import ec.espe.edu.distribuidas.proyecto.dao.ConsumoDAO;
-import ec.espe.edu.distribuidas.proyecto.dao.ProductoDAO;
 import ec.espe.edu.distribuidas.proyecto.dao.VisitaDAO;
-import ec.espe.edu.distribuidas.proyecto.model.Consumo;
+import ec.espe.edu.distribuidas.proyecto.model.Cliente;
+import ec.espe.edu.distribuidas.proyecto.model.Establecimiento;
 import ec.espe.edu.distribuidas.proyecto.model.Visita;
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.ejb.EJB;
 
 /**
@@ -22,9 +24,24 @@ public class ConsumoService {
     private ConsumoDAO consumoDAO;
     @EJB
     private VisitaDAO visitaDAO;
-    @EJB
-    private ProductoDAO productoDAO;
-    
-    
+
+    public void crearVisita() {
+        Establecimiento establecimientTMP = new Establecimiento();
+        Visita visitaTMP = new Visita();
+        Cliente clienteTMP = new Cliente();
+        String codigoTransporte = null, cedula = null;
+        String codigoUsuario = null;
+        java.util.Date fechaVisita = new Date();
+        visitaTMP.setCodigo("V0000001");
+        visitaTMP.setCodidoEstablecimiento(establecimientTMP.getCodigo());
+        visitaTMP.setCedula(cedula);
+        visitaTMP.setCodigoTransporte(codigoTransporte);
+        visitaTMP.setCodigoUsuario(codigoUsuario);
+        visitaTMP.setFecha(fechaVisita);
+        visitaTMP.setValor(BigDecimal.ZERO);
+        visitaTMP.setEstadoFactura(false);
+        this.visitaDAO.insert(visitaTMP);
+
+    }
 
 }
