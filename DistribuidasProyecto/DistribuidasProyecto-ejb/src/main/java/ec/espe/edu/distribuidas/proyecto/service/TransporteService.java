@@ -32,7 +32,6 @@ public class TransporteService {
         } else {
             throw new RuntimeException("El Transporte: " + transporte.getCodigo() + "ya existe.");
         }
-
     }
 
     public void actualizarTransporte(Transporte transporte) {
@@ -58,5 +57,4 @@ public class TransporteService {
             return null;
         }
     }
-
 }

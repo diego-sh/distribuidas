@@ -48,20 +48,12 @@ public class FacturaService {
     private ActividadDAO actividadDAO;
 
     public void crearFactura(Factura factura) {
-        Factura facturaTMP = new Factura();
-        facturaTMP.setCodigo(factura.getCodigo());
-        List<Factura> facturas = this.facturaDAO.find(facturaTMP);
-        if (facturas == null) {
-            this.facturaDAO.insert(factura);
-            crearDetalle(factura.getCodigo(), obtenerAllConsumosPorCliente(factura.getCedula()), obtenerAllConsumoActividadPorCliente(factura.getCedula()));
-        } else {
-            throw new RuntimeException("El Transporte: " + factura.getCodigo() + "ya existe.");
-        }
-
+        this.facturaDAO.insert(factura);
+        crearDetalle(factura.getCodigo(), obtenerAllConsumosPorCliente(factura.getCedula()), obtenerAllConsumoActividadPorCliente(factura.getCedula()));
+        calcularTotalFactura(obtenerDetallesPorCodFactura(factura.getCodigo()), factura);
     }
 
     public List<ConsumoActividad> obtenerAllConsumoActividadPorCliente(String cedula) {
-
         ConsumoActividadPK conSumPKTEMP;
         List<ConsumoActividad> consumosActividades = new ArrayList<ConsumoActividad>();
         List<Visita> visitaTMP = obtenerVisitasPorCliente(cedula);
@@ -137,7 +129,7 @@ public class FacturaService {
         Actividad actividadTMP;
         BigDecimal total;
         if (consumos != null) {
-            for (int i = 0; i < consumos.size(); i++) {
+            for (int i = 0; i < consumos.size(); i++) { 
                 detalleTMP = new Detalle();
                 pk = new DetallePK();
                 pk.setCodFactura(codigoFactura);
@@ -171,5 +163,25 @@ public class FacturaService {
 
     public Actividad obtenerActividadPorCodigo(String codigo) {
         return this.actividadDAO.findById(codigo, false);
+    }
+
+    public List<Detalle> obtenerDetallesPorCodFactura(Integer codigo) {
+        DetallePK pkTMP = new DetallePK();
+        Detalle detalleTMP = new Detalle();
+        pkTMP.setCodFactura(codigo);
+        detalleTMP.setPk(pkTMP);
+        return this.detalleDAO.find(detalleTMP);
+    }
+
+    public void calcularTotalFactura(List<Detalle> detalles, Factura factura) {
+        BigDecimal totalPago = null;
+        BigDecimal sumaitems = new BigDecimal("0.01");
+        if (detalles != null && !detalles.isEmpty()) {
+            for (int i = 0; i < detalles.size(); i++) {
+                totalPago = sumaitems.add(detalles.get(i).getTotal());
+            }
+            factura.setTotal(totalPago);
+            this.facturaDAO.update(factura);
+        }
     }
 }

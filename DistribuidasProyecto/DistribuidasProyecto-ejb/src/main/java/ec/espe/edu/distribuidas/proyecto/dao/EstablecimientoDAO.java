@@ -6,7 +6,6 @@
 package ec.espe.edu.distribuidas.proyecto.dao;
 
 import com.persist.common.dao.DefaultGenericDAOImple;
-import ec.espe.edu.distribuidas.proyecto.model.DetallePK;
 import ec.espe.edu.distribuidas.proyecto.model.Establecimiento;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
