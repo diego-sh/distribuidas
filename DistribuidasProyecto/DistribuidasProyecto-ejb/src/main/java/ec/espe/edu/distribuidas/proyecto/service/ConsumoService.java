@@ -5,9 +5,12 @@
  */
 package ec.espe.edu.distribuidas.proyecto.service;
 
+import ec.espe.edu.distribuidas.proyecto.dao.ConsumoActividadDAO;
 import ec.espe.edu.distribuidas.proyecto.dao.ConsumoDAO;
 import ec.espe.edu.distribuidas.proyecto.dao.VisitaDAO;
 import ec.espe.edu.distribuidas.proyecto.model.Cliente;
+import ec.espe.edu.distribuidas.proyecto.model.Consumo;
+import ec.espe.edu.distribuidas.proyecto.model.ConsumoActividad;
 import ec.espe.edu.distribuidas.proyecto.model.Establecimiento;
 import ec.espe.edu.distribuidas.proyecto.model.Visita;
 import java.math.BigDecimal;
@@ -22,6 +25,8 @@ public class ConsumoService {
 
     @EJB
     private ConsumoDAO consumoDAO;
+    @EJB
+    private ConsumoActividadDAO consumoActividadDAO;
     @EJB
     private VisitaDAO visitaDAO;
 
@@ -42,6 +47,14 @@ public class ConsumoService {
         visitaTMP.setEstadoFactura(false);
         this.visitaDAO.insert(visitaTMP);
 
+    }
+
+    public void crearConsumo(Consumo consumo) {
+        this.consumoDAO.insert(consumo);
+    }
+
+    public void crearConsumoAvtividad(ConsumoActividad consumoActividad) {
+        this.consumoActividadDAO.insert(consumoActividad);
     }
 
 }
