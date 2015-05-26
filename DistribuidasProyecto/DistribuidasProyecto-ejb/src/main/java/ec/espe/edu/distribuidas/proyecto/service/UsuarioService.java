@@ -38,4 +38,18 @@ public class UsuarioService {
         return this.usuarioDAO.findById(codigo, false);
     }
 
+    public void crearUsuario(Usuario usuario) {
+        String clave = EncripcionUtil.encriptarMD5(usuario.getClave());
+        usuario.setClave(clave);
+        this.usuarioDAO.insert(usuario);
+    }
+
+    public void actualizarUsuario(Usuario usuario) {
+        this.usuarioDAO.update(usuario);
+    }
+    
+    public void eliminarUsuario(String codigo){
+        Usuario usuarioTMP= this.usuarioDAO.findById(codigo,false);
+        this.usuarioDAO.remove(usuarioTMP);
+    }
 }

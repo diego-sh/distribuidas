@@ -21,6 +21,7 @@ import ec.espe.edu.distribuidas.proyecto.model.Factura;
 import ec.espe.edu.distribuidas.proyecto.model.Visita;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -33,7 +34,7 @@ import javax.ejb.Stateless;
 @LocalBean
 @Stateless
 public class FacturaService {
-
+    
     @EJB
     private FacturaDAO facturaDAO;
     @EJB
@@ -46,13 +47,16 @@ public class FacturaService {
     private DetalleDAO detalleDAO;
     @EJB
     private ActividadDAO actividadDAO;
-
+    
     public void crearFactura(Factura factura) {
+        Date fecha = new Date();
+        factura.setFecha(fecha);
         this.facturaDAO.insert(factura);
         crearDetalle(factura.getCodigo(), obtenerAllConsumosPorCliente(factura.getCedula()), obtenerAllConsumoActividadPorCliente(factura.getCedula()));
         calcularTotalFactura(obtenerDetallesPorCodFactura(factura.getCodigo()), factura);
+        actualizarEstadoFacturaVisita(factura.getCedula());
     }
-
+    
     public List<ConsumoActividad> obtenerAllConsumoActividadPorCliente(String cedula) {
         ConsumoActividadPK conSumPKTEMP;
         List<ConsumoActividad> consumosActividades = new ArrayList<ConsumoActividad>();
@@ -69,13 +73,13 @@ public class FacturaService {
                 }
             }
             return consumosActividades;
-
+            
         } else {
             return null;
         }
-
+        
     }
-
+    
     public List<Visita> obtenerVisitasPorCliente(String cedula) {
         Visita visitaTMP = new Visita();
         visitaTMP.setCedula(cedula);
@@ -86,9 +90,9 @@ public class FacturaService {
         } else {
             return null;
         }
-
+        
     }
-
+    
     public List<ConsumoActividad> obtenerConsumoActividadPorCodVisita(ConsumoActividadPK conSumPK) {
         ConsumoActividad consumoActividadTMP = new ConsumoActividad();
         consumoActividadTMP.setPk(conSumPK);
@@ -98,9 +102,9 @@ public class FacturaService {
         } else {
             return null;
         }
-
+        
     }
-
+    
     public List<Consumo> obtenerAllConsumosPorCliente(String cedula) {
         Consumo consumoTMP;
         List<Consumo> Consumos = new ArrayList<Consumo>();
@@ -117,19 +121,19 @@ public class FacturaService {
                 }
             }
             return Consumos;
-
+            
         } else {
             return null;
         }
     }
-
+    
     public void crearDetalle(Integer codigoFactura, List<Consumo> consumos, List<ConsumoActividad> consumosActidad) {
         Detalle detalleTMP;
         DetallePK pk;
         Actividad actividadTMP;
         BigDecimal total;
         if (consumos != null) {
-            for (int i = 0; i < consumos.size(); i++) { 
+            for (int i = 0; i < consumos.size(); i++) {                
                 detalleTMP = new Detalle();
                 pk = new DetallePK();
                 pk.setCodFactura(codigoFactura);
@@ -160,11 +164,11 @@ public class FacturaService {
             }
         }
     }
-
+    
     public Actividad obtenerActividadPorCodigo(String codigo) {
         return this.actividadDAO.findById(codigo, false);
     }
-
+    
     public List<Detalle> obtenerDetallesPorCodFactura(Integer codigo) {
         DetallePK pkTMP = new DetallePK();
         Detalle detalleTMP = new Detalle();
@@ -172,7 +176,7 @@ public class FacturaService {
         detalleTMP.setPk(pkTMP);
         return this.detalleDAO.find(detalleTMP);
     }
-
+    
     public void calcularTotalFactura(List<Detalle> detalles, Factura factura) {
         BigDecimal totalPago = null;
         BigDecimal sumaitems = new BigDecimal("0.01");
@@ -182,6 +186,13 @@ public class FacturaService {
             }
             factura.setTotal(totalPago);
             this.facturaDAO.update(factura);
+        }
+    }
+
+    public void actualizarEstadoFacturaVisita(String cedula) {
+        List<Visita> visitas = obtenerVisitasPorCliente(cedula);
+        for (int i = 0; i < visitas.size(); i++) {
+            visitas.get(i).setEstadoFactura(true);
         }
     }
 }
