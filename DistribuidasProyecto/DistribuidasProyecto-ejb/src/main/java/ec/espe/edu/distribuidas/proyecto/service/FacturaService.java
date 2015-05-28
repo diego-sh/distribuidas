@@ -16,7 +16,6 @@ import ec.espe.edu.distribuidas.proyecto.model.Consumo;
 import ec.espe.edu.distribuidas.proyecto.model.ConsumoActividad;
 import ec.espe.edu.distribuidas.proyecto.model.ConsumoActividadPK;
 import ec.espe.edu.distribuidas.proyecto.model.Detalle;
-import ec.espe.edu.distribuidas.proyecto.model.DetallePK;
 import ec.espe.edu.distribuidas.proyecto.model.Factura;
 import ec.espe.edu.distribuidas.proyecto.model.Visita;
 import java.math.BigDecimal;
@@ -34,7 +33,7 @@ import javax.ejb.Stateless;
 @LocalBean
 @Stateless
 public class FacturaService {
-    
+
     @EJB
     private FacturaDAO facturaDAO;
     @EJB
@@ -47,16 +46,16 @@ public class FacturaService {
     private DetalleDAO detalleDAO;
     @EJB
     private ActividadDAO actividadDAO;
-    
+
     public void crearFactura(Factura factura) {
         Date fecha = new Date();
         factura.setFecha(fecha);
         this.facturaDAO.insert(factura);
-        crearDetalle(factura.getCodigo(), obtenerAllConsumosPorCliente(factura.getCedula()), obtenerAllConsumoActividadPorCliente(factura.getCedula()));
-        calcularTotalFactura(obtenerDetallesPorCodFactura(factura.getCodigo()), factura);
+        crearDetalle(factura);
+        calcularTotalFactura(factura);
         actualizarEstadoFacturaVisita(factura.getCedula());
     }
-    
+
     public List<ConsumoActividad> obtenerAllConsumoActividadPorCliente(String cedula) {
         ConsumoActividadPK conSumPKTEMP;
         List<ConsumoActividad> consumosActividades = new ArrayList<ConsumoActividad>();
@@ -73,13 +72,13 @@ public class FacturaService {
                 }
             }
             return consumosActividades;
-            
+
         } else {
             return null;
         }
-        
+
     }
-    
+
     public List<Visita> obtenerVisitasPorCliente(String cedula) {
         Visita visitaTMP = new Visita();
         visitaTMP.setCedula(cedula);
@@ -90,9 +89,9 @@ public class FacturaService {
         } else {
             return null;
         }
-        
+
     }
-    
+
     public List<ConsumoActividad> obtenerConsumoActividadPorCodVisita(ConsumoActividadPK conSumPK) {
         ConsumoActividad consumoActividadTMP = new ConsumoActividad();
         consumoActividadTMP.setPk(conSumPK);
@@ -102,9 +101,9 @@ public class FacturaService {
         } else {
             return null;
         }
-        
+
     }
-    
+
     public List<Consumo> obtenerAllConsumosPorCliente(String cedula) {
         Consumo consumoTMP;
         List<Consumo> Consumos = new ArrayList<Consumo>();
@@ -121,23 +120,22 @@ public class FacturaService {
                 }
             }
             return Consumos;
-            
+
         } else {
             return null;
         }
     }
-    
-    public void crearDetalle(Integer codigoFactura, List<Consumo> consumos, List<ConsumoActividad> consumosActidad) {
+
+    public void crearDetalle(Factura factura) {
         Detalle detalleTMP;
-        DetallePK pk;
         Actividad actividadTMP;
         BigDecimal total;
+        List<Consumo> consumos = obtenerAllConsumosPorCliente(factura.getCedula());
+        List<ConsumoActividad> consumosActidad = obtenerAllConsumoActividadPorCliente(factura.getCedula());
         if (consumos != null) {
-            for (int i = 0; i < consumos.size(); i++) {                
+            for (int i = 0; i < consumos.size(); i++) {
                 detalleTMP = new Detalle();
-                pk = new DetallePK();
-                pk.setCodFactura(codigoFactura);
-                detalleTMP.setPk(pk);
+                detalleTMP.setCodigoFactura(factura.getCodigo());
                 detalleTMP.setCantidad(consumos.get(i).getCantidad());
                 detalleTMP.setDescripcion(consumos.get(i).getProducto().getNombre());
                 detalleTMP.setPrecioUnitario(consumos.get(i).getProducto().getPrecio());
@@ -150,9 +148,7 @@ public class FacturaService {
         if (consumosActidad != null) {
             for (int i = 0; i < consumosActidad.size(); i++) {
                 detalleTMP = new Detalle();
-                pk = new DetallePK();
-                pk.setCodFactura(codigoFactura);
-                detalleTMP.setPk(pk);
+                detalleTMP.setCodigoFactura(factura.getCodigo());
                 detalleTMP.setCantidad(1);
                 actividadTMP = obtenerActividadPorCodigo(consumosActidad.get(i).getPk().getCodigoActividad());
                 detalleTMP.setDescripcion(actividadTMP.getNombre());
@@ -164,25 +160,24 @@ public class FacturaService {
             }
         }
     }
-    
+
     public Actividad obtenerActividadPorCodigo(String codigo) {
         return this.actividadDAO.findById(codigo, false);
     }
-    
+
     public List<Detalle> obtenerDetallesPorCodFactura(Integer codigo) {
-        DetallePK pkTMP = new DetallePK();
         Detalle detalleTMP = new Detalle();
-        pkTMP.setCodFactura(codigo);
-        detalleTMP.setPk(pkTMP);
+        detalleTMP.setCodigoFactura(codigo);
         return this.detalleDAO.find(detalleTMP);
     }
-    
-    public void calcularTotalFactura(List<Detalle> detalles, Factura factura) {
+
+    public void calcularTotalFactura(Factura factura) {
         BigDecimal totalPago = null;
-        BigDecimal sumaitems = new BigDecimal("0.01");
+        BigDecimal sumaItems = new BigDecimal("0.01");
+        List<Detalle> detalles = obtenerDetallesPorCodFactura(factura.getCodigo());
         if (detalles != null && !detalles.isEmpty()) {
             for (int i = 0; i < detalles.size(); i++) {
-                totalPago = sumaitems.add(detalles.get(i).getTotal());
+                totalPago = sumaItems.add(detalles.get(i).getTotal());
             }
             factura.setTotal(totalPago);
             this.facturaDAO.update(factura);

@@ -39,10 +39,10 @@ public class Factura implements Serializable {
     @Column(name = "TOTAL", precision = 10, scale = 2)
     private BigDecimal total;
     @Column(name = "CEDULA")
-    private String cedula;    
-    
+    private String cedula;
+
     @JoinColumn(name = "CEDULA", referencedColumnName = "CEDULA", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Cliente cliente;
 
     public Factura() {
@@ -74,7 +74,7 @@ public class Factura implements Serializable {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
-    }    
+    }
 
     public Cliente getCliente() {
         return cliente;
@@ -90,7 +90,7 @@ public class Factura implements Serializable {
 
     public void setCedula(String cedula) {
         this.cedula = cedula;
-    }    
+    }
 
     @Override
     public int hashCode() {
@@ -116,7 +116,5 @@ public class Factura implements Serializable {
     public String toString() {
         return "Factura{" + "codigo=" + codigo + ", fecha=" + fecha + ", total=" + total + ", cedula=" + cedula + '}';
     }
-
-   
 
 }

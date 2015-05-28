@@ -8,10 +8,12 @@ package ec.espe.edu.distribuidas.proyecto.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -24,9 +26,10 @@ import javax.persistence.Table;
 public class Detalle implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected DetallePK pk;
+    @Column(name = "COD_DETALLE")
+    private Integer codigo;
     @Column(name = "PRECIO_UNITARIO", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioUnitario;
     @Column(name = "PRECIO_TOTAL", nullable = false, precision = 10, scale = 2)
@@ -35,20 +38,26 @@ public class Detalle implements Serializable {
     private String descripcion;
     @Column(name = "CANTIDAD")
     private Integer cantidad;
+    @Column(name = "COD_FACTURA")
+    private Integer codigoFactura;
+
+    @JoinColumn(name = "COD_FACTURA", referencedColumnName = "COD_FACTURA", insertable = false, updatable = false)
+    @ManyToOne
+    private Factura factura;
 
     public Detalle() {
     }
 
-    public Detalle(DetallePK detallePK) {
-        this.pk = detallePK;
+    public Detalle(Integer codigo) {
+        this.codigo = codigo;
     }
 
-    public DetallePK getPk() {
-        return pk;
+    public Integer getCodigo() {
+        return codigo;
     }
 
-    public void setPk(DetallePK pk) {
-        this.pk = pk;
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
 
     public BigDecimal getPrecioUnitario() {
@@ -82,23 +91,40 @@ public class Detalle implements Serializable {
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
-    
+
+    public Integer getCodigoFactura() {
+        return codigoFactura;
+    }
+
+    public void setCodigoFactura(Integer codigoFactura) {
+        this.codigoFactura = codigoFactura;
+    }
+
+    public Factura getFactura() {
+        return factura;
+    }
+
+    public void setFactura(Factura factura) {
+        this.factura = factura;
+    }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (pk != null ? pk.hashCode() : 0);
+        int hash = 3;
+        hash = 11 * hash + (this.codigo != null ? this.codigo.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Detalle)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Detalle other = (Detalle) object;
-        if ((this.pk == null && other.pk != null) || (this.pk != null && !this.pk.equals(other.pk))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Detalle other = (Detalle) obj;
+        if (this.codigo != other.codigo && (this.codigo == null || !this.codigo.equals(other.codigo))) {
             return false;
         }
         return true;
@@ -106,7 +132,7 @@ public class Detalle implements Serializable {
 
     @Override
     public String toString() {
-        return "Detalle{" + "pk=" + pk + '}';
-    }    
+        return "Detalle{" + "codigo=" + codigo + ", precioUnitario=" + precioUnitario + ", total=" + total + ", descripcion=" + descripcion + ", cantidad=" + cantidad + ", codigoFactura=" + codigoFactura + '}';
+    }
 
 }
