@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/plantilla1.xhtml">
+
+    <ui:define name="contenido">
+        <p:panel header="Centro Costero - Ingreso al sistema   " style="width: auto; margin-left: auto; margin-rigth:auto;">
+            <p:panelGrid columns="2">
+                <p:outputLabel for="usuario" value="Usuario:"/>
+                <p:inputText id="usuario" value= "#{login.usuario}" style="widht: 170px;" required="true"/>
+                <p:outputLabel for="clave" value="Clave:"/>
+                <p:password id="clave" value= "#{login.clave}" style="width: 170px;" required="true"/>  
+
+            </p:panelGrid>
+            <br></br>
+            <p:commandButton style="margin-left: 30%; margin-right: auto;" ajax="false" action="#{login.doLogin()}" value="Aceptar" />
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>
+

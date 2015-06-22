@@ -23,10 +23,8 @@ public class Cliente implements Serializable {
     @Id
     @Column(name = "CEDULA", nullable = false, length = 10)
     private String cedula;
-    @Column(name = "NOMBRE_CLIENTE", nullable = false, length = 50)
-    private String nombre;
-    @Column(name = "APELLIDO_CLIENTE", nullable = false, length = 50)
-    private String apellido;
+    @Column(name = "NOMBRE", nullable = false, length = 50)
+    private String nombre;   
     @Column(name = "TELEFONO", nullable = false, length = 10)
     private String telefono;
     @Column(name = "EMAIL", length = 50)
@@ -53,15 +51,7 @@ public class Cliente implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+    }  
 
     public String getTelefono() {
         return telefono;
@@ -101,7 +91,9 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente{" + "cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono + ", email=" + email + '}';
+        return "Cliente{" + "cedula=" + cedula + ", nombre=" + nombre + ", telefono=" + telefono + ", email=" + email + '}';
     }
+    
+  
 
 }

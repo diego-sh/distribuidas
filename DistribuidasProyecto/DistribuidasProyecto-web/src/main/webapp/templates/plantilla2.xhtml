@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Plantilla</title>
+        <meta name="viewport" content="width=device-width"/>
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/style.css" type="text/css" media="all"/>
+    </h:head>
+    <h:body>
+        <f:view>            
+            <div id="cabecera">
+                <img style="width: 1345px" src="resources/img/head2.png"/>
+            </div>
+            <h:form>
+                <p:menubar style="width:1320px;">                    
+                    <p:menuitem value="Clientes" outcome="cliente" icon="ui-icon-person"></p:menuitem>
+                    <p:menuitem value="Visita" outcome="visita" icon="ui-icon-star"></p:menuitem>                    
+                    <p:menuitem value="Establecimiento" outcome="establecimiento" icon="ui-icon-building"></p:menuitem>
+                    <p:menuitem value="Facturacion" outcome="facturacion" icon="ui-icon-credit-card"></p:menuitem>
+                    <f:facet name="options">
+                        <p:inputText style="margin-right:10px" placeholder="Buscar"/>
+                        <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+            <div id="main">               
+                <div id="ig">
+                    <h:form>
+                        <ui:insert name="contenido"/>
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" severity="info,error" globalOnly="true" escape="false" style="font-size: 12px;" />
+                    </h:form>
+                </div>                 
+            </div>
+            <div id="pie">
+                <p>Copyright® 2015 Elaborado por:</p>
+                <p>Diego Alpala, Daniel Oña</p>
+            </div>
+
+        </f:view>
+
+    </h:body>
+</html>

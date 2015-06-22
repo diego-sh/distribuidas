@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/plantilla2.xhtml">
+
+    <ui:define name="contenido">
+       
+            <h3 style="margin-top:0">Administración de Clientes</h3>
+            <p:dataTable id="tabla" var="cliente" value="#{clienteBean.clientes}" rows="10" paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"  style="width: 600px; font-size: 12px;" selectionMode="single" 
+                         selection="#{clienteBean.clienteSeleccionado}" rowKey="#{cliente.cedula}">
+                <p:column headerText="Cedula" style="width: 100px;">
+                    <h:outputText value="#{cliente.cedula}" />
+                </p:column>
+                <p:column headerText="Nombre" style="width: 300px;">
+                    <h:outputText value="#{cliente.nombre}" />
+                </p:column>
+                <p:column headerText="Telefono" >
+                    <h:outputText value="#{cliente.telefono}"/>
+                </p:column>
+            </p:dataTable>
+            <br></br>
+            <h:panelGrid columns="4" style="width: 600px; font-size: 12px;">
+                <p:commandButton value="Nuevo" actionListener="#{clienteBean.nuevoCliente()}" icon="ui-icon-plus" update="@form"/>
+                <p:commandButton value="Modificar" actionListener="#{clienteBean.modificarCliente()}" icon="ui-icon-pencil" update="@form"/>
+                <p:commandButton value="Detalles" actionListener="#{clienteBean.detallesCliente()}" icon="ui-icon-search" update="@form" />
+                <p:commandButton value="Eliminar" actionListener="#{clienteBean.eliminarCliente()}"  icon="ui-icon-times" update="@form" />
+            </h:panelGrid>
+            <br></br>
+            <p:panel header="#{clienteBean.tituloFormulario} " style="width: 600px ; font-size: 12px;" rendered="#{clienteBean.enNuevoCliente || clienteBean.enModificarCliente || clienteBean.enDetalleCliente || clienteBean.enEliminarCliente}">
+                <p:panelGrid columns="3" style="width: 95%">
+                    <p:outputLabel for="cedula" value="Cedula:" />
+                    <p:inputText id="cedula" value="#{clienteBean.cliente.cedula}" style="width: 200px;" required="true" readonly="#{clienteBean.enDetalleCliente}"/>
+                    <p:message for="cedula" />
+                    <p:outputLabel for="nombre" value="Nombre:" />
+                    <p:inputText id="nombre" value="#{clienteBean.cliente.nombre}" style="width: 250px;" required="true" readonly="#{clienteBean.enDetalleCliente}"/>
+                    <p:message for="nombre" />
+                    <p:outputLabel for="telefono" value="Telefono:" />
+                    <p:inputText id="telefono" value="#{clienteBean.cliente.telefono}" style="width: 250px;" required="true" readonly="#{clienteBean.enDetalleCliente}"/>
+                    <p:message for="telefono" />
+                    <p:outputLabel for="email" value="Email:" />
+                    <p:inputText id="email" value="#{clienteBean.cliente.email}" style="width: 250px;"  readonly="#{clienteBean.enDetalleCliente}"/>
+                    <p:message for="email" />
+                </p:panelGrid>
+
+                <p:commandButton  style="width: 100px; margin-left: 30%; margin-top: 2%;" value="Guardar" actionListener="#{clienteBean.guardarCliente()}"  rendered="#{not clienteBean.enDetalleCliente}" update="@form" icon="ui-icon-disk"/>
+                <p:commandButton  style="width: 100px; margin-left: 5% ;margin-top: 2%;" value="Cancelar" actionListener="#{clienteBean.cancelar()}" immediate="true"  update="@form"/>
+            </p:panel>
+        
+    </ui:define>       
+</ui:composition>

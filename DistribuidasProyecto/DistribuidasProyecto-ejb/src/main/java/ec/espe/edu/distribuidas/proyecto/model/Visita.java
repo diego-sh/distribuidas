@@ -46,16 +46,16 @@ public class Visita implements Serializable {
     @Column(name = "COD_ESTABLECIMIENTO")
     private String codidoEstablecimiento;
 
-    @JoinColumn(name = "CEDULA", referencedColumnName = "CEDULA", nullable = false)
+    @JoinColumn(name = "CEDULA", referencedColumnName = "CEDULA", insertable = false, updatable = false)
     @ManyToOne
     private Cliente cliente;
-    @JoinColumn(name = "COD_TRANSPORTE", referencedColumnName = "COD_TRANSPORTE")
+    @JoinColumn(name = "COD_TRANSPORTE", referencedColumnName = "COD_TRANSPORTE", insertable = false, updatable = false )
     @ManyToOne
     private Transporte transporte;
-    @JoinColumn(name = "COD_USUARIO", referencedColumnName = "COD_USUARIO")
+    @JoinColumn(name = "COD_USUARIO", referencedColumnName = "COD_USUARIO", insertable = false, updatable = false)
     @ManyToOne
     private Usuario usuario;
-    @JoinColumn(name = "COD_ESTABLECIMIENTO", referencedColumnName = "COD_ESTABLECIMIENTO", nullable = false)
+    @JoinColumn(name = "COD_ESTABLECIMIENTO", referencedColumnName = "COD_ESTABLECIMIENTO", insertable = false, updatable = false)
     @ManyToOne
     private Establecimiento establecimiento;
 

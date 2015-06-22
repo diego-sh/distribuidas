@@ -7,27 +7,29 @@ package ec.espe.edu.distribuidas.proyecto.service;
 
 import ec.espe.edu.distribuidas.proyecto.dao.ClienteDAO;
 import ec.espe.edu.distribuidas.proyecto.model.Cliente;
-import ec.espe.edu.distribuidas.proyecto.model.Establecimiento;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author Diego
  */
+@LocalBean
+@Stateless
 public class ClienteService {
 
     @EJB
     private ClienteDAO clienteDAO;
 
     public void crearCliente(Cliente cliente) {
-        Cliente clienteTMP = new Cliente();
-        clienteTMP.setCedula(cliente.getCedula());
-        List<Cliente> clientes = this.clienteDAO.find(clienteTMP);
-        if (clientes == null) {
+       
+        Cliente clienteTMP = this.clienteDAO.findById(cliente.getCedula(),false);
+        if (clienteTMP == null) {
             this.clienteDAO.insert(cliente);
         } else {
-            throw new RuntimeException("El Cliente: " + cliente.getCedula() + "ya existe.");
+            throw new RuntimeException("El Cliente: " + cliente.getCedula() + " ya existe.");
         }
     }
 
@@ -40,7 +42,11 @@ public class ClienteService {
         this.clienteDAO.remove(clienteTMP);
     }
 
-    public Cliente ObtenerClientePorCodigo(String codigo) {
+    public Cliente obtenerClientePorCodigo(String codigo) {
         return this.clienteDAO.findById(codigo, false);
+    }
+    
+    public List<Cliente> obtenerClientes(){
+        return this.clienteDAO.findAll();
     }
 }
