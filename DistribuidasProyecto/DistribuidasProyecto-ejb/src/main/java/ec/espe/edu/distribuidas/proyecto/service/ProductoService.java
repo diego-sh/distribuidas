@@ -24,13 +24,12 @@ public class ProductoService {
     private ProductoDAO productoDAO;
 
     public void crearProducto(Producto producto) {
-        Producto productoTMP = new Producto();
-        productoTMP.setCodigo(producto.getCodigo());
-        List<Producto> productos = this.productoDAO.find(productoTMP);
-        if (productos == null) {
+        Producto productoTMP = this.productoDAO.findById(producto.getCodigo(), false);
+        
+        if (productoTMP == null) {
             this.productoDAO.insert(producto);
         } else {
-            throw new RuntimeException("El Producto: " + producto.getCodigo() + "ya existe.");
+            throw new RuntimeException("El Producto: " + producto.getCodigo() + " ya existe.");
         }
 
     }
@@ -46,5 +45,9 @@ public class ProductoService {
 
     public Producto obtenerProductoPorCodigo(String codigo) {
         return this.productoDAO.findById(codigo, false);
+    }
+    
+    public List<Producto> obtenerProductos(){
+        return this.productoDAO.findAll();
     }
 }

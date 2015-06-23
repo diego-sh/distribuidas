@@ -7,7 +7,6 @@ package ec.espe.edu.distribuidas.proyecto;
 
 import ec.espe.edu.distribuidas.proyecto.model.Cliente;
 import ec.espe.edu.distribuidas.proyecto.service.ClienteService;
-import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -116,6 +115,7 @@ public class ClienteBean {
         this.enNuevoCliente = false;
         this.enModificarCliente = false;
         this.enDetalleCliente = false;
+        this.enEliminarCliente=false;
     }
 
     public List<Cliente> getClientes() {

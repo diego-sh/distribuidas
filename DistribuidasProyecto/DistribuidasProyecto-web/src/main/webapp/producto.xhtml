@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/plantilla2.xhtml">
+
+    <ui:define name="contenido">
+        <h3 style="margin-top:0">Administración de Productos</h3>
+        <p:dataTable var="producto" value="#{productoBean.productos}" rows="10" paginator="true"
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15"  style="width: 600px; font-size: 12px;" selectionMode="single" 
+                     selection="#{productoBean.productoSeleccionado}" rowKey="#{producto.codigo}">
+            <p:column headerText="Codigo" style="width: 100px;">
+                <h:outputText value="#{producto.codigo}" />
+            </p:column>
+            <p:column headerText="Nombre" style="width: 300px;">
+                <h:outputText value="#{producto.nombre}" />
+            </p:column>
+            <p:column headerText="Precio" >
+                <h:outputText value="#{producto.precio}"/>
+            </p:column>
+        </p:dataTable>
+        <br></br>
+        <h:panelGrid columns="4" style="width: 600px; font-size: 12px;">
+            <p:commandButton value="Nuevo" actionListener="#{productoBean.nuevoProducto()}" icon="ui-icon-plus" update="@form"/>
+            <p:commandButton value="Modificar" actionListener="#{productoBean.modificarProducto()}" icon="ui-icon-pencil" update="@form"/>
+            <p:commandButton value="Detalles" actionListener="#{productoBean.detallesProducto()}" icon="ui-icon-search" update="@form" />
+            <p:commandButton value="Eliminar" actionListener="#{productoBean.eliminarProducto()}"  icon="ui-icon-trash-o" update="@form" />
+        </h:panelGrid>
+        <br></br>
+        <p:panel header="#{productoBean.tituloFormulario} " style="width: 600px ; font-size: 12px;" rendered="#{productoBean.enNuevoProducto || productoBean.enModificarProducto || productoBean.enDetalleProducto || productoBean.enEliminarProducto}">
+            <p:panelGrid columns="3" style="width: 95%">
+                <p:outputLabel for="codigo" value="Codigo:" />
+                <p:inputText id="codigo" value="#{productoBean.producto.codigo}" style="width: 200px;" required="true" readonly="#{productoBean.enDetalleProducto || productoBean.enModificarProducto || productoBean.enEliminarProducto}"/>
+                <p:message for="codigo" />
+                <p:outputLabel for="nombre" value="Nombre:" />
+                <p:inputText id="nombre" value="#{productoBean.producto.nombre}" style="width: 250px;" required="true" readonly="#{productoBean.enDetalleProducto || productoBean.enEliminarProducto}"/>
+                <p:message for="nombre" />
+                <p:outputLabel for="precio" value="Precio:" />
+                <p:inputText id="precio" value="#{productoBean.producto.precio}" style="width: 250px;" required="true" readonly="#{productoBean.enDetalleProducto || productoBean.enEliminarProducto}"/>
+                <p:message for="precio" />
+                <p:outputLabel for="detalles" value="Detalles:" />
+                <p:inputText id="detalles" value="#{productoBean.producto.descripcion}" style="width: 250px;"  readonly="#{productoBean.enDetalleProducto || productoBean.enEliminarProducto}"/>
+                <p:message for="detalles" />
+            </p:panelGrid>
+
+            <p:commandButton  style="width: 100px; margin-left: 30%; margin-top: 2%;" value="Guardar" actionListener="#{productoBean.guardarProducto()}"  rendered="#{not productoBean.enDetalleProducto}" update="@form" icon="ui-icon-disk"/>
+            <p:commandButton  style="width: 100px; margin-left: 5% ;margin-top: 2%;" value="Cancelar" actionListener="#{productoBean.cancelar()}" immediate="true"  update="@form"  icon="ui-icon-reply"/>
+        </p:panel>
+
+    </ui:define>    
+</ui:composition>

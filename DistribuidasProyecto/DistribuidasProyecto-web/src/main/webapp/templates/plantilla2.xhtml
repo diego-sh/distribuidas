@@ -21,10 +21,13 @@ and open the template in the editor.
                 <img style="width: 1345px" src="resources/img/head2.png"/>
             </div>
             <h:form>
-                <p:menubar style="width:1320px;">                    
+                <p:menubar style="width:1320px; font-size: 13px;">                    
                     <p:menuitem value="Clientes" outcome="cliente" icon="ui-icon-person"></p:menuitem>
                     <p:menuitem value="Visita" outcome="visita" icon="ui-icon-star"></p:menuitem>                    
-                    <p:menuitem value="Establecimiento" outcome="establecimiento" icon="ui-icon-building"></p:menuitem>
+                    <p:submenu label="Establecimiento" icon="ui-icon-building">
+                        <p:menuitem value="Producto" outcome="producto" icon="ui-icon-arrowreturnthick-1-w" />
+                        <p:menuitem value="Ubicaciones" outcome="visita" icon="ui-icon-arrowreturnthick-1-e" />
+                    </p:submenu>                    
                     <p:menuitem value="Facturacion" outcome="facturacion" icon="ui-icon-credit-card"></p:menuitem>
                     <f:facet name="options">
                         <p:inputText style="margin-right:10px" placeholder="Buscar"/>

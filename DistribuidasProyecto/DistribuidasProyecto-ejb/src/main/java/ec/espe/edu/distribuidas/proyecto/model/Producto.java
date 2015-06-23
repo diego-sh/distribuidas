@@ -27,7 +27,7 @@ public class Producto implements Serializable {
     private String codigo;
     @Column(name = "NOMBRE_PRODUCTO", nullable = false, length = 60)
     private String nombre;
-    @Column(name = "PRECIO", nullable = false, precision = 6, scale = 2)
+    @Column(name = "PRECIO", nullable = false, precision = 4, scale = 2)
     private BigDecimal precio;
     @Column(name = "DESC_PRODUCTO", length = 100)
     private String descripcion;
