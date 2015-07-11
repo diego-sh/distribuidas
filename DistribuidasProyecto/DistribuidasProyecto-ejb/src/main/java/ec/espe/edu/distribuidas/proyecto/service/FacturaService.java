@@ -14,10 +14,10 @@ import ec.espe.edu.distribuidas.proyecto.dao.VisitaDAO;
 import ec.espe.edu.distribuidas.proyecto.model.Actividad;
 import ec.espe.edu.distribuidas.proyecto.model.Consumo;
 import ec.espe.edu.distribuidas.proyecto.model.ConsumoActividad;
-import ec.espe.edu.distribuidas.proyecto.model.ConsumoActividadPK;
 import ec.espe.edu.distribuidas.proyecto.model.Detalle;
 import ec.espe.edu.distribuidas.proyecto.model.Factura;
 import ec.espe.edu.distribuidas.proyecto.model.Visita;
+import ec.espe.edu.distribuidas.proyecto.util.Valores;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,14 +57,13 @@ public class FacturaService {
     }
 
     public List<ConsumoActividad> obtenerAllConsumoActividadPorCliente(String cedula) {
-        ConsumoActividadPK conSumPKTEMP;
+        
         List<ConsumoActividad> consumosActividades = new ArrayList<ConsumoActividad>();
         List<Visita> visitaTMP = obtenerVisitasPorCliente(cedula);
         if (visitaTMP != null) {
             for (int i = 0; i < visitaTMP.size(); i++) {
-                conSumPKTEMP = new ConsumoActividadPK();
-                conSumPKTEMP.setCodigoVisita(visitaTMP.get(i).getCodigo());
-                List<ConsumoActividad> conActividades = obtenerConsumoActividadPorCodVisita(conSumPKTEMP);
+                
+                List<ConsumoActividad> conActividades = obtenerConsumoActividadPorCodVisita(visitaTMP.get(i).getCodigo());
                 if (conActividades != null) {
                     consumosActividades.addAll(conActividades);
                 } else {
@@ -82,7 +81,7 @@ public class FacturaService {
     public List<Visita> obtenerVisitasPorCliente(String cedula) {
         Visita visitaTMP = new Visita();
         visitaTMP.setCedula(cedula);
-        visitaTMP.setEstadoFactura(false);
+        visitaTMP.setEstado(Valores.ESTADO_NO_FACTURADO);
         List<Visita> visitas = this.visitaDAO.find(visitaTMP);
         if (visitas != null && !visitas.isEmpty()) {
             return visitas;
@@ -92,9 +91,9 @@ public class FacturaService {
 
     }
 
-    public List<ConsumoActividad> obtenerConsumoActividadPorCodVisita(ConsumoActividadPK conSumPK) {
+    public List<ConsumoActividad> obtenerConsumoActividadPorCodVisita(Integer codigoVisita) {
         ConsumoActividad consumoActividadTMP = new ConsumoActividad();
-        consumoActividadTMP.setPk(conSumPK);
+        consumoActividadTMP.setCodigoVisita(codigoVisita);
         List<ConsumoActividad> consumos = this.consumoActividadDAO.find(consumoActividadTMP);
         if (consumos != null & !consumos.isEmpty()) {
             return consumos;
@@ -150,7 +149,7 @@ public class FacturaService {
                 detalleTMP = new Detalle();
                 detalleTMP.setCodigoFactura(factura.getCodigo());
                 detalleTMP.setCantidad(1);
-                actividadTMP = obtenerActividadPorCodigo(consumosActidad.get(i).getPk().getCodigoActividad());
+                actividadTMP = obtenerActividadPorCodigo(consumosActidad.get(i).getCodigoActividad());
                 detalleTMP.setDescripcion(actividadTMP.getNombre());
                 detalleTMP.setPrecioUnitario(consumosActidad.get(i).getValor());
                 BigDecimal cantidad = new BigDecimal(detalleTMP.getCantidad());
@@ -187,7 +186,7 @@ public class FacturaService {
     public void actualizarEstadoFacturaVisita(String cedula) {
         List<Visita> visitas = obtenerVisitasPorCliente(cedula);
         for (int i = 0; i < visitas.size(); i++) {
-            visitas.get(i).setEstadoFactura(true);
+            visitas.get(i).setEstado(Valores.ESTADO_FACTURADO);
         }
     }
 }

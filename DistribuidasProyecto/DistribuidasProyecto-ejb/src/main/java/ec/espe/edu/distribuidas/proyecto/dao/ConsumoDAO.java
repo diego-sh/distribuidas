@@ -16,7 +16,7 @@ import javax.ejb.Stateless;
  */
 @LocalBean
 @Stateless
-public class ConsumoDAO extends DefaultGenericDAOImple<Consumo, String> {
+public class ConsumoDAO extends DefaultGenericDAOImple<Consumo, Integer> {
 
     public ConsumoDAO() {
         super(Consumo.class);

@@ -7,7 +7,6 @@
 package ec.espe.edu.distribuidas.proyecto.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,51 +24,40 @@ import javax.persistence.TemporalType;
  * @author Diego
  */
 @Entity
-@Table(name = "visita")
-public class Visita implements Serializable {
+@Table(name = "registro")
+public class Registro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
     
-    @Column(name = "COD_VISITA", nullable = false)
+    @Column(name = "COD_REGISTRO", nullable = false)
     private Integer codigo;
     
-    @Column(name = "FECHA_VISITA", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha;
-    
-    @Column(name = "ESTADO_FACTURA", nullable = false, length = 3)
-    private String estado;
-    
-    @Column(name = "VALOR_VISITA", precision = 3, scale = 2)
-    private BigDecimal valor;
-    
+    @Column(name = "FECHA_INGRESO", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date fechaIngreso;
+    @Column(name = "FECHA_SALIDA")
+    @Temporal(TemporalType.DATE)
+    private Date fechaSalida;
+    @Column(name = "COD_RECEPCIONISTA", nullable = false)
+    private Integer codigoRecepcionista;
     @Column(name = "CEDULA", nullable = false)
     private String cedula;
-    @Column(name = "COD_ESTABLECIMIENTO", nullable = false)
-    private String codEstablecimiento;
     
+    @JoinColumn(name = "COD_RECEPCIONISTA", referencedColumnName = "COD_RECEPCIONISTA", insertable = false, updatable = false)
+    @ManyToOne
+    private Recepcionista recepcionista;
     @JoinColumn(name = "CEDULA", referencedColumnName = "CEDULA", insertable = false, updatable = false)
     @ManyToOne
     private Cliente cliente;
-    @JoinColumn(name = "COD_ESTABLECIMIENTO", referencedColumnName = "COD_ESTABLECIMIENTO", insertable = false, updatable = false)
-    @ManyToOne
-    private Establecimiento establecimiento;
-    
-    
 
-    public Visita() {
+    public Registro() {
     }
 
-    public Visita(Integer codVisita) {
-        this.codigo = codVisita;
+    public Registro(Integer codRegistro) {
+        this.codigo = codRegistro;
     }
-
-    public Visita(Integer codVisita, Date fechaVisita, String estadoFactura) {
-        this.codigo = codVisita;
-        this.fecha = fechaVisita;
-        this.estado = estadoFactura;
-    }
+   
 
     public Integer getCodigo() {
         return codigo;
@@ -79,28 +67,28 @@ public class Visita implements Serializable {
         this.codigo = codigo;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getFechaIngreso() {
+        return fechaIngreso;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
     }
 
-    public String getEstado() {
-        return estado;
+    public Date getFechaSalida() {
+        return fechaSalida;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setFechaSalida(Date fechaSalida) {
+        this.fechaSalida = fechaSalida;
     }
 
-    public BigDecimal getValor() {
-        return valor;
+    public Recepcionista getRecepcionista() {
+        return recepcionista;
     }
 
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
+    public void setRecepcionista(Recepcionista recepcionista) {
+        this.recepcionista = recepcionista;
     }
 
     public Cliente getCliente() {
@@ -111,12 +99,12 @@ public class Visita implements Serializable {
         this.cliente = cliente;
     }
 
-    public Establecimiento getEstablecimiento() {
-        return establecimiento;
+    public Integer getCodigoRecepcionista() {
+        return codigoRecepcionista;
     }
 
-    public void setEstablecimiento(Establecimiento establecimiento) {
-        this.establecimiento = establecimiento;
+    public void setCodigoRecepcionista(Integer codigoRecepcionista) {
+        this.codigoRecepcionista = codigoRecepcionista;
     }
 
     public String getCedula() {
@@ -126,16 +114,6 @@ public class Visita implements Serializable {
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
-
-    public String getCodEstablecimiento() {
-        return codEstablecimiento;
-    }
-
-    public void setCodEstablecimiento(String codEstablecimiento) {
-        this.codEstablecimiento = codEstablecimiento;
-    }
-
-    
 
     @Override
     public int hashCode() {
@@ -147,10 +125,10 @@ public class Visita implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Visita)) {
+        if (!(object instanceof Registro)) {
             return false;
         }
-        Visita other = (Visita) object;
+        Registro other = (Registro) object;
         if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
@@ -159,7 +137,7 @@ public class Visita implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.espe.edu.distribuidas.examen.model.Visita[ codVisita=" + codigo + " ]";
+        return "ec.espe.edu.distribuidas.examen.model.Registro[ codRegistro=" + codigo + " ]";
     }
     
 }

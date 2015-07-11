@@ -3,22 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package ec.espe.edu.distribuidas.proyecto.dao;
 
 import com.persist.common.dao.DefaultGenericDAOImple;
-import ec.espe.edu.distribuidas.proyecto.model.Transporte;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+import ec.espe.edu.distribuidas.proyecto.model.Registro;
 
 /**
  *
- * @author Daniel
+ * @author Diego
  */
-@LocalBean
-@Stateless
-public class TransporteDAO extends DefaultGenericDAOImple<Transporte, String> {
+public class RegistroDAO extends DefaultGenericDAOImple<Registro, Integer> {
 
-    public TransporteDAO() {
-        super(Transporte.class);
+    public RegistroDAO() {
+        super(Registro.class);
     }
 }

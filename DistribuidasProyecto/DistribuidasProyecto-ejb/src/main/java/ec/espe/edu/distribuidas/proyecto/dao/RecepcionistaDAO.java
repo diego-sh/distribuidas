@@ -3,22 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package ec.espe.edu.distribuidas.proyecto.dao;
 
 import com.persist.common.dao.DefaultGenericDAOImple;
-import ec.espe.edu.distribuidas.proyecto.model.Visita;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+import ec.espe.edu.distribuidas.proyecto.model.Recepcionista;
 
 /**
  *
- * @author Daniel
+ * @author Diego
  */
-@LocalBean
-@Stateless
-public class VisitaDAO extends DefaultGenericDAOImple<Visita, Integer> {
+public class RecepcionistaDAO extends DefaultGenericDAOImple<Recepcionista,Integer> {
 
-    public VisitaDAO() {
-        super(Visita.class);
+    public RecepcionistaDAO() {
+        super(Recepcionista.class);
     }
 }

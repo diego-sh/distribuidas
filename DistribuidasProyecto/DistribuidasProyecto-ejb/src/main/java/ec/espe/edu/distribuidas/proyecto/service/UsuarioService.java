@@ -8,6 +8,7 @@ package ec.espe.edu.distribuidas.proyecto.service;
 import ec.espe.edu.distribuidas.proyecto.dao.UsuarioDAO;
 import ec.espe.edu.distribuidas.proyecto.model.Usuario;
 import ec.espe.edu.distribuidas.proyecto.util.EncripcionUtil;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -23,18 +24,20 @@ public class UsuarioService {
     @EJB
     private UsuarioDAO usuarioDAO;
 
-    public Usuario login(String codigoUsuario, String clave) {
-        Usuario usuario = this.usuarioDAO.findById(codigoUsuario, false);
-        if (usuario != null) {
-            String claveEnc = EncripcionUtil.encriptarMD5(usuario.getClave());
-            if (claveEnc.equals(clave)) {
-                return usuario;
+    public Usuario login(String nickname, String clave) {
+        Usuario usuarioTMP = new Usuario();
+        usuarioTMP.setNickname(nickname);
+        List<Usuario> usuarios=this.usuarioDAO.find(usuarioTMP, false);
+        if (usuarios != null) {
+            String claveEnc = EncripcionUtil.encriptarMD5(clave);
+            if (claveEnc.equals(usuarios.get(0).getClave())) {
+                return usuarios.get(0);
             }
         }
         return null;
     }
 
-    public Usuario obtenerPorCodigo(String codigo) {
+    public Usuario obtenerPorCodigo(Integer codigo) {
         return this.usuarioDAO.findById(codigo, false);
     }
 
@@ -48,8 +51,5 @@ public class UsuarioService {
         this.usuarioDAO.update(usuario);
     }
     
-    public void eliminarUsuario(String codigo){
-        Usuario usuarioTMP= this.usuarioDAO.findById(codigo,false);
-        this.usuarioDAO.remove(usuarioTMP);
-    }
+    
 }

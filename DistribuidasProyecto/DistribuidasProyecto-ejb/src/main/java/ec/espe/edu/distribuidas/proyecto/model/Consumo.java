@@ -33,7 +33,7 @@ public class Consumo implements Serializable {
     @Column(name = "DETALLE", length = 100)
     private String detalle;
     @Column(name = "COD_VISITA")
-    private String codigoVisita;
+    private Integer codigoVisita;
     @Column(name = "COD_PRODUCTO")
     private String codigoProducto;
 
@@ -91,11 +91,11 @@ public class Consumo implements Serializable {
         this.producto = producto;
     }
 
-    public String getCodigoVisita() {
+    public Integer getCodigoVisita() {
         return codigoVisita;
     }
 
-    public void setCodigoVisita(String codigoVisita) {
+    public void setCodigoVisita(Integer codigoVisita) {
         this.codigoVisita = codigoVisita;
     }
 

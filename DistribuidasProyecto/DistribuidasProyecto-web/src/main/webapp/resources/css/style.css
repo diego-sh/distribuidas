@@ -8,20 +8,18 @@ and open the template in the editor.
     Author     : Diego
 */
 body{
-    width: 1000px;
     font-family: Verdana, Arial;
     font-size: 15px;    
     background: aliceblue;
 }
 
 #cabecera{
-    width: 100%;
-    float: none;
-    height: 130px;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
 }
 
 #main{
-    width: 1300px;
     margin-left: auto;
     margin-left: auto;
     padding: 10px 10px 10px 10px;
@@ -39,15 +37,31 @@ body{
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
 }
-#pie{
-    
-    position: fixed;
-    bottom: 0;
-    z-index: 100;
+#contenido-total {
+    /*width: 680px;*/
+    background: none repeat scroll 0 0;
+    bottom: 50px;
     left: 0;
-    text-align: center;
+    overflow: auto;
+    padding: 20px;
+    position: fixed;
+    right: 0;
+    top: 127px;
+}
+
+#pie{
+    background: none repeat scroll 0 0;
+    background-size: 100% 100%;
+    padding:5px 5px;
     font-size: 9px;
-    
+    bottom: 0;
+    height: 45px;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    color: black;
+    width: 99.3%;
 }
 #ig{    
     width: 600px;
@@ -56,4 +70,3 @@ body{
     margin-right: auto;
 /*    float: left;*/
 }
-

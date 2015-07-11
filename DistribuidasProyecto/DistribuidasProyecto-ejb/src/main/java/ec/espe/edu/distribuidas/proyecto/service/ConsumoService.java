@@ -79,14 +79,7 @@ public class ConsumoService {
 
     public void crearVisita(Visita visita) {
         Date fechaVisita = new Date();
-        visita.setCodidoEstablecimiento(visita.getCodidoEstablecimiento());
-        visita.setCedula(visita.getCedula());
-        visita.setCodigoTransporte(visita.getCodigoTransporte());
-        visita.setCodigoUsuario(visita.getCodigoUsuario());
-        visita.setFecha(fechaVisita);
-        visita.setValor(valorVisita(visita.getCodidoEstablecimiento()));
-        visita.setEstadoFactura(false);
-        this.visitaDAO.insert(visita);
+        
     }
 
     public BigDecimal valorVisita(String codigoStablecimiento) {

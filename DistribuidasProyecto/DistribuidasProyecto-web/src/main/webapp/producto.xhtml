@@ -8,6 +8,7 @@
                 template="/templates/plantilla2.xhtml">
 
     <ui:define name="contenido">
+        <p:spacer height="15px"></p:spacer>
         <h3 style="margin-top:0">Administración de Productos</h3>
         <p:dataTable var="producto" value="#{productoBean.productos}" rows="10" paginator="true"
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -46,10 +47,9 @@
                 <p:inputText id="detalles" value="#{productoBean.producto.descripcion}" style="width: 250px;"  readonly="#{productoBean.enDetalleProducto || productoBean.enEliminarProducto}"/>
                 <p:message for="detalles" />
             </p:panelGrid>
-
             <p:commandButton  style="width: 100px; margin-left: 30%; margin-top: 2%;" value="Guardar" actionListener="#{productoBean.guardarProducto()}"  rendered="#{not productoBean.enDetalleProducto}" update="@form" icon="ui-icon-disk"/>
             <p:commandButton  style="width: 100px; margin-left: 5% ;margin-top: 2%;" value="Cancelar" actionListener="#{productoBean.cancelar()}" immediate="true"  update="@form"  icon="ui-icon-reply"/>
         </p:panel>
-
+        <p:spacer height="15px"></p:spacer>
     </ui:define>    
 </ui:composition>

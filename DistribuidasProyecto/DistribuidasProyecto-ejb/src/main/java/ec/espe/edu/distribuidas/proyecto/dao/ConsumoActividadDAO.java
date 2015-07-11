@@ -7,7 +7,6 @@ package ec.espe.edu.distribuidas.proyecto.dao;
 
 import com.persist.common.dao.DefaultGenericDAOImple;
 import ec.espe.edu.distribuidas.proyecto.model.ConsumoActividad;
-import ec.espe.edu.distribuidas.proyecto.model.ConsumoActividadPK;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -17,7 +16,7 @@ import javax.ejb.Stateless;
  */
 @LocalBean
 @Stateless
-public class ConsumoActividadDAO extends DefaultGenericDAOImple<ConsumoActividad, ConsumoActividadPK> {
+public class ConsumoActividadDAO extends DefaultGenericDAOImple<ConsumoActividad, Integer> {
 
     public ConsumoActividadDAO() {
         super(ConsumoActividad.class);
