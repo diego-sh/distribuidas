@@ -11,13 +11,13 @@
         <p:panel header="Centro Costero - Ingreso al sistema   " style="width: auto; margin-left: auto; margin-rigth:auto;">
             <p:panelGrid columns="2">
                 <p:outputLabel for="usuario" value="Usuario:"/>
-                <p:inputText id="usuario" value= "#{login.usuario}" style="widht: 170px;" required="true"/>
+                <p:inputText id="usuario" value= "#{loginBean.usuario}" style="widht: 170px;" required="true"/>
                 <p:outputLabel for="clave" value="Clave:"/>
-                <p:password id="clave" value= "#{login.clave}" style="width: 170px;" required="true"/>  
+                <p:password id="clave" value= "#{loginBean.clave}" style="width: 170px;" required="true"/>  
 
             </p:panelGrid>
             <br></br>
-            <p:commandButton style="margin-left: 30%; margin-right: auto;" ajax="false" action="#{login.doLogin()}" value="Aceptar" />
+            <p:commandButton style="margin-left: 30%; margin-right: auto;" ajax="false" action="#{loginBean.doLogin()}" value="Aceptar" />
         </p:panel>
 
     </ui:define>

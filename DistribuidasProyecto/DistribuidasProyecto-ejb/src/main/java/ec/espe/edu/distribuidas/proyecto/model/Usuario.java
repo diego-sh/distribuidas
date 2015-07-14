@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ec.espe.edu.distribuidas.proyecto.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,11 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -28,28 +22,31 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
     @Column(name = "COD_USUARIO", nullable = false)
     private Integer codigo;
-    
+
     @Column(name = "NOMBRE_USUARIO", nullable = false, length = 50)
     private String nombre;
-    
+
     @Column(name = "CLAVE_USUARIO", nullable = false, length = 128)
     private String clave;
-    
+
     @Column(name = "ESTADO_USUARIO", nullable = false, length = 3)
     private String estado;
-    
+
     @Column(name = "NICKNAME", nullable = false, length = 50)
     private String nickname;
-    
+
+    @Column(name = "TIPO_USUARIO", nullable = false, length = 3)
+    private String tipo;
+
     @Column(name = "COD_ESTABLECIMIENTO", nullable = false)
     private String codigoEstablecimiento;
-    
+
     @JoinColumn(name = "COD_ESTABLECIMIENTO", referencedColumnName = "COD_ESTABLECIMIENTO", insertable = false, updatable = false)
     @ManyToOne
     private Establecimiento establecimiento;
@@ -59,7 +56,7 @@ public class Usuario implements Serializable {
 
     public Usuario(Integer codUsuario) {
         this.codigo = codUsuario;
-    }   
+    }
 
     public Integer getCodigo() {
         return codigo;
@@ -87,6 +84,20 @@ public class Usuario implements Serializable {
 
     public String getEstado() {
         return estado;
+    }
+
+    public String getEstadoCompleto() {
+        String estadoTMP = this.estado;
+        if (estadoTMP.equals("PRI")) {
+            estadoTMP = "Nuevo";
+        }
+        if (estadoTMP.equals("ACT")) {
+            estadoTMP = "Activo";
+        }
+        if (estadoTMP.equals("INA")) {
+            estadoTMP = "Inactivo";
+        }
+        return estadoTMP;
     }
 
     public void setEstado(String estado) {
@@ -117,6 +128,27 @@ public class Usuario implements Serializable {
         this.codigoEstablecimiento = codigoEstablecimiento;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getTipoCompleto() {
+        String tipoUusario = this.tipo;
+
+        if (tipoUusario.equals("EST")) {
+            tipoUusario = "Establecimiento";
+        }
+        if (tipoUusario.equals("REC")) {
+            tipoUusario = "Recepción";
+        }
+
+        return tipoUusario;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -139,7 +171,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.espe.edu.distribuidas.examen.model.Usuario[ codUsuario=" + codigo + " ]";
+        return "Usuario=" + nombre;
     }
-    
+
 }

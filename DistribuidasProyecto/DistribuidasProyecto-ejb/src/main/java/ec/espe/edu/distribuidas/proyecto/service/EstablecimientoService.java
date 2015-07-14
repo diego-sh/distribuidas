@@ -29,10 +29,9 @@ public class EstablecimientoService {
     private UbicacionDAO ubicacionDAO;
 
     public void crearUbicacion(Ubicacion ubicacion) {
-        Ubicacion ubicacionTMP = new Ubicacion();
-        ubicacionTMP.setCodigo(ubicacion.getCodigo());
-        List<Ubicacion> ubicaciones = this.ubicacionDAO.find(ubicacionTMP);
-        if (ubicaciones == null) {
+        
+       Ubicacion ubicacionTMP = this.ubicacionDAO.findById(ubicacion.getCodigo(), false);
+        if (ubicacionTMP == null) {
             this.ubicacionDAO.insert(ubicacion);
         } else {
             throw new RuntimeException("La Ubicacion: " + ubicacion.getCodigo() + "ya existe.");
@@ -51,12 +50,20 @@ public class EstablecimientoService {
     public Ubicacion obtenerUbicacionPorCodigo(String codigo) {
         return this.ubicacionDAO.findById(codigo, false);
     }
+    
+    public List<Ubicacion> obtenerAllUbicacion(){
+        List<Ubicacion> ubicaciones= null;       
+        ubicaciones=this.ubicacionDAO.findAll();
+        if(ubicaciones==null){
+            throw new RuntimeException("El Ubicaciones 0");
+        }
+        
+        return ubicaciones;
+    }
 
     public void crearEstablecimiento(Establecimiento establecimiento) {
-        Establecimiento establecimientoTMP = new Establecimiento();
-        establecimientoTMP.setCodigo(establecimiento.getCodigo());
-        List<Establecimiento> establecimientos = this.establecimientoDAO.find(establecimientoTMP);
-        if (establecimientos == null) {
+        Establecimiento establecimientoTMP = this.establecimientoDAO.findById(establecimiento.getCodigo(), false);
+        if (establecimientoTMP == null) {
             this.establecimientoDAO.insert(establecimiento);
         } else {
             throw new RuntimeException("El Establecimiento: " + establecimiento.getCodigo() + "ya existe.");
@@ -80,6 +87,10 @@ public class EstablecimientoService {
         Establecimiento establecimientoTMP = new Establecimiento();
         establecimientoTMP.setCodigoUbicacion(codigoUbicacion);
         return this.establecimientoDAO.findO(establecimientoTMP, Order.ascendente("Nombre_Establecimiento"));
+    }
+
+    public List<Establecimiento> obtenerAllEstablecimiento() {
+        return this.establecimientoDAO.findAll();
     }
 
 }

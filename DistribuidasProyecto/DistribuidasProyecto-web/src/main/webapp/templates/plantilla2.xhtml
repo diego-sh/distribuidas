@@ -27,16 +27,18 @@ and open the template in the editor.
                         <p:menuitem value="Visita" outcome="visita" icon="ui-icon-star"></p:menuitem>                    
                         <p:submenu label="Establecimiento" icon="ui-icon-building">
                             <p:menuitem value="Producto" outcome="producto" icon="ui-icon-arrowreturnthick-1-w" />
-                            <p:menuitem value="Ubicaciones" outcome="visita" icon="ui-icon-arrowreturnthick-1-e" />
+                            <p:menuitem value="Administración" outcome="establecimiento" icon="ui-icon-arrowreturnthick-1-e" />                            
                         </p:submenu>                    
                         <p:menuitem value="Facturacion" outcome="facturacion" icon="ui-icon-credit-card"></p:menuitem>
+                        <p:menuitem value="Usuarios" outcome="usuario" icon="ui-icon-person"></p:menuitem>
                         <f:facet name="options">                        
-                            <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+                            <p:button value="Salir" icon="ui-icon-extlink" outcome="login" />
                         </f:facet>
                     </p:menubar>
                 </h:form>
                 <div id="main">               
                     <div id="ig">
+
                         <h:form>
                             <ui:insert name="contenido"/>
                             <p:messages id="messages" showDetail="true" autoUpdate="true" severity="info,error" globalOnly="true" escape="false" style="font-size: 12px;" />

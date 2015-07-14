@@ -8,11 +8,15 @@ package ec.espe.edu.distribuidas.proyecto.dao;
 
 import com.persist.common.dao.DefaultGenericDAOImple;
 import ec.espe.edu.distribuidas.proyecto.model.Registro;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author Diego
  */
+@LocalBean
+@Stateless
 public class RegistroDAO extends DefaultGenericDAOImple<Registro, Integer> {
 
     public RegistroDAO() {

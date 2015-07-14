@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package ec.espe.edu.distribuidas.proyecto.model;
 
 import java.io.Serializable;
@@ -19,21 +20,33 @@ import javax.persistence.Table;
 @Table(name = "ubicacion")
 
 public class Ubicacion implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "COD_UBICACION", nullable = false, length = 4)
     private String codigo;
+    
     @Column(name = "NUMERO_BLOQUE", nullable = false)
-    private int numeroBloque;
+    private Integer numeroBloque;    
+    
     @Column(name = "REFERENCIA", length = 100)
     private String referencia;
+    
+    @Column(name = "NOMBRE_UBICACION", nullable = false, length = 50)
+    private String nombre;
+    
+    
 
     public Ubicacion() {
     }
 
     public Ubicacion(String codUbicacion) {
         this.codigo = codUbicacion;
+    }
+
+    public Ubicacion(String codUbicacion, int numeroBloque, String referencia) {
+        this.codigo = codUbicacion;
+        this.numeroBloque = numeroBloque;
+        this.referencia = referencia;
     }
 
     public String getCodigo() {
@@ -44,11 +57,11 @@ public class Ubicacion implements Serializable {
         this.codigo = codigo;
     }
 
-    public int getNumeroBloque() {
+    public Integer getNumeroBloque() {
         return numeroBloque;
     }
 
-    public void setNumeroBloque(int numeroBloque) {
+    public void setNumeroBloque(Integer numeroBloque) {
         this.numeroBloque = numeroBloque;
     }
 
@@ -60,6 +73,15 @@ public class Ubicacion implements Serializable {
         this.referencia = referencia;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+   
     @Override
     public int hashCode() {
         int hash = 0;
@@ -82,7 +104,7 @@ public class Ubicacion implements Serializable {
 
     @Override
     public String toString() {
-        return "Ubicacion{" + "codigo=" + codigo + ", numeroBloque=" + numeroBloque + ", referencia=" + referencia + '}';
+        return "Ubicacion=" + codigo ;
     }
-
+    
 }

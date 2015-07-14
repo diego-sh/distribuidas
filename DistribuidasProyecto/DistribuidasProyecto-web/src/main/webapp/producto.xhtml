@@ -11,6 +11,7 @@
         <p:spacer height="15px"></p:spacer>
         <h3 style="margin-top:0">Administración de Productos</h3>
         <p:dataTable var="producto" value="#{productoBean.productos}" rows="10" paginator="true"
+                     paginatorPosition="bottom"
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15"  style="width: 600px; font-size: 12px;" selectionMode="single" 
                      selection="#{productoBean.productoSeleccionado}" rowKey="#{producto.codigo}">

@@ -1,16 +1,113 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/plantilla2.xhtml">
+
+    <ui:define name="contenido">
+        <p:tabView orientation="left" style="font-size: 12px">
+            <p:tab title="Ubicaciónes">
+                <h3 style="margin-top:0; margin-left:20%">Administració Ubicación</h3>
+                <p:dataTable  var="ubicacion" value="#{establecimientoBean.ubicaciones}" 
+                              paginator="true"
+                              rows="4"
+                              paginatorPosition="bottom"
+                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                              emptyMessage="No existen ubicaciones registrados."
+                              style="width: 500px; margin-left: auto; margin-right: auto; font-size: 12px;"
+                              selectionMode="single" selection="#{establecimientoBean.ubicacionSeleccionada}" rowKey="#{ubicacion.codigo}">
+                    <p:column headerText="Nombre " >
+                        <h:outputText value="#{ubicacion.nombre}" />
+                    </p:column>
+                    <p:column headerText="Bloque Numero " >
+                        <h:outputText value="#{ubicacion.numeroBloque}" />
+                    </p:column>
+                    <p:column headerText="Referencia:" style="width: 200px">
+                        <h:outputText value="#{ubicacion.referencia}" />
+                    </p:column>                    
+                </p:dataTable>
+                <p:spacer height="20px"></p:spacer>
+                <h:panelGrid columns="2" style="width: 250px; margin-left: auto; margin-right: auto; font-size: 12px;">
+                    <p:commandButton value="Nuevo" actionListener="#{establecimientoBean.nuevaUbicacion()}" icon="ui-icon-plus" update="@form"/>
+                    <p:commandButton value="Modificar" actionListener="#{establecimientoBean.modificarUbicacion()}" icon="ui-icon-pencil" update="@form"/>            
+
+                </h:panelGrid>
+                <p:spacer height="15px"></p:spacer>
+                <p:panel header="#{establecimientoBean.tituloFormulario} " style="width: 600px ; font-size: 12px; margin-left: auto; margin-right: auto;" 
+                         rendered="#{establecimientoBean.enNuevoU || establecimientoBean.enModificarU}">
+                    <p:panelGrid columns="3" style="width: 95%">
+                        <p:outputLabel for="codigo" value="Código:" />
+                        <p:inputText id="codigoU" value="#{establecimientoBean.ubicacion.codigo}"  maxlength="4" required="true" readonly="#{establecimientoBean.enModificarU}" />
+                        <p:message for="codigo" />
+                        <p:outputLabel for="nombre" value="Nombre:" />
+                        <p:inputText id="nombreU" value="#{establecimientoBean.ubicacion.nombre}"  maxlength="50" required="true" />
+                        <p:message for="nombre" />
+                        <p:outputLabel for="bloque" value="Número Bloque:" />
+                        <p:spinner id="bloque" value="#{establecimientoBean.ubicacion.numeroBloque}" required="true" min="1" />
+                        <p:message for="bloque" />
+                        <p:outputLabel for="referencia" value="Referencia:" />
+                        <p:inputTextarea id="referencia" value="#{establecimientoBean.ubicacion.referencia}" rows="2" cols="33" maxlength="100"/>
+                        <p:message for="referencia" />
+                    </p:panelGrid>
+                    <p:commandButton  style="width: 100px; margin-left: 30%; margin-top: 2%;" value="Guardar" actionListener="#{establecimientoBean.guardarUbicacion()}"   update="@form" icon="ui-icon-disk"/>
+                    <p:commandButton  style="width: 100px; margin-left: 5% ;margin-top: 2%;" value="Cancelar" actionListener="#{establecimientoBean.cancelarUbicacion()}" immediate="true"  update="@form"  icon="ui-icon-reply"/>
+                </p:panel>
+            </p:tab>
+            <p:tab title="Establecimientos">
+                <h3 style="margin-top:0; margin-left: 20%;">Administración Establecimiento</h3>
+                <p:dataTable  var="establecimiento" value="#{establecimientoBean.establecimientos}" style="width: 500px; font-size: 12px; margin-left: auto; margin-right: auto;"
+                              paginator="true"
+                              rows="4"
+                              paginatorPosition="bottom"
+                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                              emptyMessage="No existen Establecimientos registrados."
+                              selectionMode="single" selection="#{establecimientoBean.establecimientoSeleccionado}" rowKey="#{establecimiento.codigo}">
+                    <p:column headerText="Nombre" >
+                        <h:outputText value="#{establecimiento.nombre}" />
+                    </p:column>
+                    <p:column headerText="U. Bloque #:" >
+                        <h:outputText value="#{establecimiento.ubicacion.numeroBloque}" />
+                    </p:column>
+                    <p:column headerText="Ubicado" style="width: 200px">
+                        <h:outputText value="#{establecimiento.ubicacion.nombre}" />
+                    </p:column>            
+                </p:dataTable>
+
+                <p:spacer height="20px"></p:spacer>
+                <h:panelGrid columns="4" style="width: 450px; font-size: 12px; margin-left: auto; margin-right: auto">
+                    <p:commandButton value="Nuevo" actionListener="#{establecimientoBean.nuevoEstablecimiento()}" icon="ui-icon-plus" update="@form"/>
+                    <p:commandButton value="Modificar" actionListener="#{establecimientoBean.modificarEstablecimiento()}" icon="ui-icon-pencil" update="@form"/>            
+                    <p:commandButton value="Detalles" actionListener="#{establecimientoBean.detallesEstablecimiento()}"  icon="ui-icon-search" update="@form" />
+                    <p:commandButton value="Eliminar" actionListener="#{establecimientoBean.eliminarEstablecimiento()}"  icon="ui-icon-close" update="@form" />
+                </h:panelGrid>
+                <p:spacer height="15px"></p:spacer>
+                <p:panel header="#{establecimientoBean.tituloFormulario} " style="width: 600px ; font-size: 12px; margin-left: auto; margin-right: auto;" 
+                         rendered="#{establecimientoBean.enNuevo || establecimientoBean.enModificar || establecimientoBean.enDetalles || establecimientoBean.enEliminar}">
+                    <p:panelGrid columns="3" style="width: 95%">
+                        <p:outputLabel for="codigo" value="Codigo:" />
+                        <p:inputText id="codigo" value="#{establecimientoBean.establecimiento.codigo}" maxlength="4" style="width: 250px;" required="true" readonly="#{establecimientoBean.enModificar || establecimientoBean.enDetalles || establecimientoBean.enEliminar}"/>
+                        <p:message for="codigo" />
+                        <p:outputLabel for="nombre" value="Nombre:" />
+                        <p:inputText id="nombre" value="#{establecimientoBean.establecimiento.nombre}" maxlength="50" style="width: 250px;" required="true" readonly="#{establecimientoBean.enDetalles || establecimientoBean.enEliminar}"/>
+                        <p:message for="nombre" />
+                        <p:outputLabel for="ubicacion" value="Ubicación:" /> 
+                        <p:selectOneMenu id="ubicacion" value="#{establecimientoBean.establecimiento.codigoUbicacion}" required="true" style="width: 200px;" disabled="#{establecimientoBean.enDetalles || establecimientoBean.enEliminar}">
+                            <f:selectItems value="#{establecimientoBean.ubicaciones}" var="ubicaciones" itemLabel="#{ubicaciones.nombre}" itemValue="#{ubicaciones.codigo}" />                    
+                        </p:selectOneMenu>
+                        <p:message for="ubicacion"/>
+                        <p:outputLabel for="descripcion" value="Descripción:" />
+                        <p:inputTextarea id="descripcion" value="#{establecimientoBean.establecimiento.descripcion}" maxlength="100" style="width: 250px;" readonly="#{establecimientoBean.enDetalles || establecimientoBean.enEliminar}"/>
+                        <p:message for="descripcion" />
+                    </p:panelGrid>
+                    <p:commandButton  style="width: 100px; margin-left: 30%; margin-top: 2%;" value="Guardar" actionListener="#{establecimientoBean.guardarEstablecimiento()}"  rendered="#{ not establecimientoBean.enDetalles}" update="@form" icon="ui-icon-disk"/>
+                    <p:commandButton  style="width: 100px; margin-left: 5% ;margin-top: 2%;" value="Cancelar" actionListener="#{establecimientoBean.cancelar()}" immediate="true"  update="@form"  icon="ui-icon-reply"/>
+                </p:panel>
+            </p:tab>
+
+        </p:tabView>
+
+    </ui:define>    
+</ui:composition>

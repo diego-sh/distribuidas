@@ -29,6 +29,9 @@ public class Cliente implements Serializable {
     private String telefono;
     @Column(name = "EMAIL", length = 50)
     private String email;
+    @Column(name = "DIRECCION", length = 100)
+    private String direccion;
+
 
     public Cliente() {
     }
@@ -67,6 +70,14 @@ public class Cliente implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     @Override

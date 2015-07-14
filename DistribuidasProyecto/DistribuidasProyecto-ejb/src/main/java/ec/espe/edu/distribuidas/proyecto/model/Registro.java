@@ -28,8 +28,7 @@ import javax.persistence.TemporalType;
 public class Registro implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)    
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)        
     @Column(name = "COD_REGISTRO", nullable = false)
     private Integer codigo;
     
@@ -39,14 +38,15 @@ public class Registro implements Serializable {
     @Column(name = "FECHA_SALIDA")
     @Temporal(TemporalType.DATE)
     private Date fechaSalida;
-    @Column(name = "COD_RECEPCIONISTA", nullable = false)
-    private Integer codigoRecepcionista;
+    
     @Column(name = "CEDULA", nullable = false)
     private String cedula;
+    @Column(name = "COD_USUARIO")
+    private Integer codigoUsuario;
     
-    @JoinColumn(name = "COD_RECEPCIONISTA", referencedColumnName = "COD_RECEPCIONISTA", insertable = false, updatable = false)
+    @JoinColumn(name = "COD_USUARIO", referencedColumnName = "COD_USUARIO", insertable = false, updatable = false)
     @ManyToOne
-    private Recepcionista recepcionista;
+    private Usuario usuario;
     @JoinColumn(name = "CEDULA", referencedColumnName = "CEDULA", insertable = false, updatable = false)
     @ManyToOne
     private Cliente cliente;
@@ -83,14 +83,7 @@ public class Registro implements Serializable {
         this.fechaSalida = fechaSalida;
     }
 
-    public Recepcionista getRecepcionista() {
-        return recepcionista;
-    }
-
-    public void setRecepcionista(Recepcionista recepcionista) {
-        this.recepcionista = recepcionista;
-    }
-
+   
     public Cliente getCliente() {
         return cliente;
     }
@@ -99,13 +92,21 @@ public class Registro implements Serializable {
         this.cliente = cliente;
     }
 
-    public Integer getCodigoRecepcionista() {
-        return codigoRecepcionista;
+    public Integer getCodigoUsuario() {
+        return codigoUsuario;
     }
 
-    public void setCodigoRecepcionista(Integer codigoRecepcionista) {
-        this.codigoRecepcionista = codigoRecepcionista;
+    public void setCodigoUsuario(Integer codigoUsuario) {
+        this.codigoUsuario = codigoUsuario;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }   
 
     public String getCedula() {
         return cedula;

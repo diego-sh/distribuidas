@@ -168,6 +168,7 @@ public class ClienteBean {
         this.cliente.setNombre(this.clienteSeleccionado.getNombre());
         this.cliente.setTelefono(this.clienteSeleccionado.getTelefono());
         this.cliente.setEmail(this.clienteSeleccionado.getEmail());
+        this.cliente.setDireccion(this.clienteSeleccionado.getDireccion());
     }
 
 }

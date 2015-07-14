@@ -16,4 +16,7 @@ public class Valores {
     public static final String ESTADO_PRIMER = "PRI";
     public static final String ESTADO_FACTURADO = "FAC";
     public static final String ESTADO_NO_FACTURADO = "NOF";   
+    public static final String CLAVE_DEFAULT = "1234.";
+    public static final String TIPO_USUARIO_ESTABLECIMIENTO = "EST";
+    public static final String TIPO_USUARIO_RECEPCION = "REC";
 }
